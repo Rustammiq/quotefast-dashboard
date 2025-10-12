@@ -1,5 +1,5 @@
 // Netlify Function for password reset
-const { logger } = require('../../lib/logger');
+// Note: Using console.log instead of logger for Netlify Functions
 
 exports.handler = async (event, context) => {
   // Handle CORS

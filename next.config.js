@@ -6,9 +6,9 @@ const nextConfig = {
   distDir: 'out',
   
   // Disable server-side features for static export
-  experimental: {
-    appDir: true,
-  },
+  // experimental: {
+  //   appDir: true, // Deprecated in Next.js 14
+  // },
   
   images: {
     unoptimized: true, // Required for static export

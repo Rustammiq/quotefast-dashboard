@@ -5,10 +5,19 @@
   # Publish directory (Next.js static export)
   publish = "out"
   
-  # Node.js version
+  # Node.js version and environment variables
   [build.environment]
     NODE_VERSION = "18"
     NPM_VERSION = "9"
+    NEXT_PUBLIC_SUPABASE_URL = ""
+    NEXT_PUBLIC_SUPABASE_ANON_KEY = ""
+    SUPABASE_SERVICE_ROLE_KEY = ""
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = ""
+    STRIPE_SECRET_KEY = ""
+    STRIPE_WEBHOOK_SECRET = ""
+    OPENAI_API_KEY = ""
+    RESEND_API_KEY = ""
+    NEXT_PUBLIC_APP_URL = ""
 
 # Redirect rules for Next.js routing (SPA fallback)
 [[redirects]]
@@ -73,14 +82,4 @@
   to = "/.netlify/functions/stripe-webhook"
   status = 200
 
-# Environment variables (these will be set in Netlify dashboard)
-[build.environment]
-  NEXT_PUBLIC_SUPABASE_URL = ""
-  NEXT_PUBLIC_SUPABASE_ANON_KEY = ""
-  SUPABASE_SERVICE_ROLE_KEY = ""
-  NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = ""
-  STRIPE_SECRET_KEY = ""
-  STRIPE_WEBHOOK_SECRET = ""
-  OPENAI_API_KEY = ""
-  RESEND_API_KEY = ""
-  NEXT_PUBLIC_APP_URL = ""
+# Environment variables are now defined above in the build.environment section
