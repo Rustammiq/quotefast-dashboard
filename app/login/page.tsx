@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useAuth } from '../../contexts/AuthContext'
 import { useRouter } from 'next/navigation'
 import ErrorMessage from '../../components/ui/ErrorMessage'
+import LoadingButton from '../../components/ui/LoadingButton'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -97,14 +98,15 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <button
+          <LoadingButton
             type="submit"
-            disabled={isLoading}
+            isLoading={isLoading}
+            loadingText="Inloggen..."
+            icon={<LogIn className="w-4 h-4" />}
             className="w-full bg-brand-primary hover:bg-brand-primary-dark py-3 rounded-xl font-medium text-white transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <LogIn className="inline w-4 h-4 mr-2" /> 
-            {isLoading ? 'Inloggen...' : 'Inloggen'}
-          </button>
+            Inloggen
+          </LoadingButton>
         </form>
 
         <div className="mt-6 text-sm text-brand-muted">

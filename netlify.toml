@@ -2,8 +2,8 @@
   # Build command for Next.js
   command = "npm run build"
   
-  # Publish directory (Next.js default)
-  publish = ".next"
+  # Publish directory (let Netlify Next.js plugin handle this)
+  # publish = ".next"
   
   # Node.js version and environment variables
   [build.environment]
@@ -20,11 +20,11 @@
     RESEND_API_KEY = ""
     NEXT_PUBLIC_APP_URL = ""
 
-# Redirect rules for Next.js routing (SPA fallback)
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# Remove SPA fallback redirect - Netlify Next.js plugin handles this
+# [[redirects]]
+#   from = "/*"
+#   to = "/index.html"
+#   status = 200
 
 # Headers for security and performance
 [[headers]]

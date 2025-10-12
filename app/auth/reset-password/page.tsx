@@ -18,8 +18,8 @@ export default function ResetPassword() {
 
   useEffect(() => {
     // Check if we have the necessary tokens in the URL
-    const accessToken = searchParams.get('access_token')
-    const refreshToken = searchParams.get('refresh_token')
+    const accessToken = searchParams?.get('access_token')
+    const refreshToken = searchParams?.get('refresh_token')
     
     if (!accessToken || !refreshToken) {
       setError('Invalid reset link. Please request a new password reset.')

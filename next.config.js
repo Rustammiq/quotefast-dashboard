@@ -5,6 +5,11 @@ const nextConfig = {
   trailingSlash: true,
   // distDir: 'out',
   
+  // Fix for Supabase Edge Runtime issues
+  // experimental: {
+  //   runtime: 'nodejs', // Invalid option
+  // },
+  
   images: {
     unoptimized: true,
     remotePatterns: [

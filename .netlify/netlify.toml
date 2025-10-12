@@ -4,8 +4,8 @@ headersOrigin = "config"
 redirectsOrigin = "config"
 
 [build]
-publish = "/Users/innovars_lab/Downloads/dashboard-starter/out"
-publishOrigin = "config"
+publish = "/Users/innovars_lab/Downloads/dashboard-starter/.next"
+publishOrigin = "ui"
 commandOrigin = "config"
 command = "npm run build"
 functions = "/Users/innovars_lab/Downloads/dashboard-starter/netlify/functions"
@@ -78,18 +78,6 @@ for = "/*.svg"
 
 [headers.values]
 Cache-Control = "public, max-age=31536000"
-
-[[redirects]]
-from = "/*"
-to = "/index.html"
-status = 200.0
-force = false
-
-[redirects.query]
-
-[redirects.conditions]
-
-[redirects.headers]
 
 [[redirects]]
 from = "/api/auth/reset-password"
