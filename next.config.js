@@ -1,10 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Configure for Netlify with Next.js plugin
-  // Remove output: 'export' to work with Netlify Next.js plugin
+  // Configure for static export
+  output: 'export',
   trailingSlash: true,
+  distDir: 'out',
   
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',

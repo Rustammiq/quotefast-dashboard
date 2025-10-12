@@ -1,11 +1,11 @@
 functionsDirectory = "/Users/innovars_lab/Downloads/dashboard-starter/netlify/functions"
 functionsDirectoryOrigin = "default"
-headersOrigin = "config"
-redirectsOrigin = "config"
+headersOrigin = "inline"
+redirectsOrigin = "inline"
 
 [build]
-publish = "/Users/innovars_lab/Downloads/dashboard-starter/.next"
-publishOrigin = "ui"
+publish = "/Users/innovars_lab/Downloads/dashboard-starter/out"
+publishOrigin = "config"
 commandOrigin = "config"
 command = "npm run build"
 functions = "/Users/innovars_lab/Downloads/dashboard-starter/netlify/functions"
@@ -16,6 +16,7 @@ NPM_VERSION = "9"
 NEXT_PUBLIC_SUPABASE_URL = ""
 NEXT_PUBLIC_SUPABASE_ANON_KEY = ""
 SUPABASE_SERVICE_ROLE_KEY = ""
+DATABASE_URL = ""
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = ""
 STRIPE_SECRET_KEY = ""
 STRIPE_WEBHOOK_SECRET = ""
@@ -34,6 +35,9 @@ NEXT_PUBLIC_APP_URL = ""
 [build.processing.js]
 
 [build.services]
+
+[images]
+remote_images = ["^(?:https:\\/\\/avatars\\.githubusercontent\\.com(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)|$))$", "^(?:https:\\/\\/qgyboabomydquodygomq\\.supabase\\.co(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)|$))$"]
 
 [functions]
 
@@ -77,6 +81,12 @@ for = "/*.svg"
 
 [headers.values]
 Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+for = "/_next/static/*"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
 
 [[redirects]]
 from = "/*"
@@ -145,6 +155,36 @@ status = 200.0
 force = false
 
 [redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/_next/image/"
+to = "/.netlify/images?url=:url&w=:width&q=:quality"
+status = 200.0
+force = false
+
+[redirects.query]
+url = ":url"
+w = ":width"
+q = ":quality"
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/_ipx/*"
+to = "/.netlify/images?url=:url&w=:width&q=:quality"
+status = 200.0
+force = false
+
+[redirects.query]
+url = ":url"
+w = ":width"
+q = ":quality"
 
 [redirects.conditions]
 
