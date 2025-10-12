@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Configure for static export
-  output: 'export',
+  // Remove static export for Netlify
+  // output: 'export',
   trailingSlash: true,
-  distDir: 'out',
+  // distDir: 'out',
   
   images: {
     unoptimized: true,

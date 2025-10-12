@@ -2,8 +2,8 @@
   # Build command for Next.js
   command = "npm run build"
   
-  # Publish directory for static export
-  publish = "out"
+  # Publish directory (Next.js default)
+  publish = ".next"
   
   # Node.js version and environment variables
   [build.environment]
