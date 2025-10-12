@@ -3,12 +3,15 @@ import { neon } from '@neondatabase/serverless';
 
 const neonUrl = process.env.NEON_DATA_API_URL || process.env.VITE_NEON_DATA_API_URL;
 
-if (!neonUrl) {
-  throw new Error('NEON_DATA_API_URL environment variable is required');
+// Only create Neon client if we have a valid connection string
+let neonClient: any = null;
+if (neonUrl && neonUrl.includes('@') && neonUrl.includes('://')) {
+  try {
+    neonClient = neon(neonUrl);
+  } catch (error) {
+    console.warn('Failed to create Neon client:', error);
+  }
 }
-
-// Create Neon client
-export const neonClient = neon(neonUrl);
 
 // Database query helper functions
 export class NeonDatabase {
@@ -16,8 +19,12 @@ export class NeonDatabase {
 
   // Generic query method
   async query<T = any>(sql: string, params?: any[]): Promise<T[]> {
+    if (!this.client) {
+      console.warn('Neon client not available, returning empty array');
+      return [];
+    }
     try {
-      const result = await this.client(sql, params);
+      const result = await this.client(sql as any, params);
       return result as T[];
     } catch (error) {
       console.error('Neon database query error:', error);

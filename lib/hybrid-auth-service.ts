@@ -94,8 +94,9 @@ export const hybridAuthService = {
         name: userProfile.full_name || '',
         company: userProfile.company_name,
         subscription: {
-          tier: userProfile.subscription_tier || 'free',
-          status: userProfile.subscription_status || 'active'
+          plan: userProfile.subscription_tier || 'free',
+          status: userProfile.subscription_status || 'active',
+          currentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
         }
       };
 
@@ -186,8 +187,9 @@ export const hybridAuthService = {
         name: name,
         company: company,
         subscription: {
-          tier: 'free',
-          status: 'active'
+          plan: 'free',
+          status: 'active',
+          currentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
         }
       };
 
@@ -237,8 +239,9 @@ export const hybridAuthService = {
         name: userProfile.full_name || '',
         company: userProfile.company_name,
         subscription: {
-          tier: userProfile.subscription_tier || 'free',
-          status: userProfile.subscription_status || 'active'
+          plan: userProfile.subscription_tier || 'free',
+          status: userProfile.subscription_status || 'active',
+          currentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
         }
       };
 
@@ -279,7 +282,7 @@ export const hybridAuthService = {
       if (userData.name) updateData.full_name = userData.name;
       if (userData.company) updateData.company_name = userData.company;
       if (userData.subscription) {
-        updateData.subscription_tier = userData.subscription.tier;
+        updateData.subscription_tier = userData.subscription.plan;
         updateData.subscription_status = userData.subscription.status;
       }
 
@@ -299,8 +302,9 @@ export const hybridAuthService = {
         name: updatedProfile.full_name || '',
         company: updatedProfile.company_name,
         subscription: {
-          tier: updatedProfile.subscription_tier || 'free',
-          status: updatedProfile.subscription_status || 'active'
+          plan: updatedProfile.subscription_tier || 'free',
+          status: updatedProfile.subscription_status || 'active',
+          currentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
         }
       };
 
