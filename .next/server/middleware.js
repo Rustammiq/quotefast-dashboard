@@ -2174,7 +2174,7 @@ module.exports = __toCommonJS(src_exports);
 // src/clientComponentClient.ts
 var import_auth_helpers_shared = __webpack_require__(699);
 var supabase;
-function createClientComponentClient({ supabaseUrl = "", supabaseKey = "", options, cookieOptions, isSingleton = true } = {}) {
+function createClientComponentClient({ supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL, supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, options, cookieOptions, isSingleton = true } = {}) {
     if (!supabaseUrl || !supabaseKey) {
         throw new Error("either NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY env variables or supabaseUrl and supabaseKey are required!");
     }
@@ -2241,7 +2241,7 @@ var NextServerAuthStorageAdapter = class extends import_auth_helpers_shared2.Coo
         ]);
     }
 };
-function createPagesServerClient(context, { supabaseUrl = "", supabaseKey = "", options, cookieOptions } = {}) {
+function createPagesServerClient(context, { supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL, supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, options, cookieOptions } = {}) {
     var _a;
     if (!supabaseUrl || !supabaseKey) {
         throw new Error("either NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY env variables or supabaseUrl and supabaseKey are required!");
@@ -2297,7 +2297,7 @@ var NextMiddlewareAuthStorageAdapter = class extends import_auth_helpers_shared3
         }
     }
 };
-function createMiddlewareClient(context, { supabaseUrl = "", supabaseKey = "", options, cookieOptions } = {}) {
+function createMiddlewareClient(context, { supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL, supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, options, cookieOptions } = {}) {
     var _a;
     if (!supabaseUrl || !supabaseKey) {
         throw new Error("either NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY env variables or supabaseUrl and supabaseKey are required!");
@@ -2332,7 +2332,7 @@ var NextServerComponentAuthStorageAdapter = class extends import_auth_helpers_sh
     setCookie(name, value) {}
     deleteCookie(name) {}
 };
-function createServerComponentClient(context, { supabaseUrl = "", supabaseKey = "", options, cookieOptions } = {}) {
+function createServerComponentClient(context, { supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL, supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, options, cookieOptions } = {}) {
     var _a;
     if (!supabaseUrl || !supabaseKey) {
         throw new Error("either NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY env variables or supabaseUrl and supabaseKey are required!");
@@ -2375,7 +2375,7 @@ var NextRouteHandlerAuthStorageAdapter = class extends import_auth_helpers_share
         });
     }
 };
-function createRouteHandlerClient(context, { supabaseUrl = "", supabaseKey = "", options, cookieOptions } = {}) {
+function createRouteHandlerClient(context, { supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL, supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, options, cookieOptions } = {}) {
     var _a;
     if (!supabaseUrl || !supabaseKey) {
         throw new Error("either NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY env variables or supabaseUrl and supabaseKey are required!");
@@ -2397,7 +2397,7 @@ function createRouteHandlerClient(context, { supabaseUrl = "", supabaseKey = "",
 // src/serverActionClient.ts
 var createServerActionClient = createRouteHandlerClient;
 // src/deprecated.ts
-function createBrowserSupabaseClient({ supabaseUrl = "", supabaseKey = "", options, cookieOptions } = {}) {
+function createBrowserSupabaseClient({ supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL, supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, options, cookieOptions } = {}) {
     console.warn("Please utilize the `createPagesBrowserClient` function instead of the deprecated `createBrowserSupabaseClient` function. Learn more: https://supabase.com/docs/guides/auth/auth-helpers/nextjs-pages");
     return createPagesBrowserClient({
         supabaseUrl,
@@ -2406,7 +2406,7 @@ function createBrowserSupabaseClient({ supabaseUrl = "", supabaseKey = "", optio
         cookieOptions
     });
 }
-function createServerSupabaseClient(context, { supabaseUrl = "", supabaseKey = "", options, cookieOptions } = {}) {
+function createServerSupabaseClient(context, { supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL, supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, options, cookieOptions } = {}) {
     console.warn("Please utilize the `createPagesServerClient` function instead of the deprecated `createServerSupabaseClient` function. Learn more: https://supabase.com/docs/guides/auth/auth-helpers/nextjs-pages");
     return createPagesServerClient(context, {
         supabaseUrl,
@@ -2415,7 +2415,7 @@ function createServerSupabaseClient(context, { supabaseUrl = "", supabaseKey = "
         cookieOptions
     });
 }
-function createMiddlewareSupabaseClient(context, { supabaseUrl = "", supabaseKey = "", options, cookieOptions } = {}) {
+function createMiddlewareSupabaseClient(context, { supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL, supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, options, cookieOptions } = {}) {
     console.warn("Please utilize the `createMiddlewareClient` function instead of the deprecated `createMiddlewareSupabaseClient` function. Learn more: https://supabase.com/docs/guides/auth/auth-helpers/nextjs#middleware");
     return createMiddlewareClient(context, {
         supabaseUrl,

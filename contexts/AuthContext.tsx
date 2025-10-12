@@ -1,7 +1,8 @@
 'use client'
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
-import { authService, User } from '../lib/auth-service'
+import { hybridAuthService } from '../lib/hybrid-auth-service'
+import { User } from '../types/user'
 import { OnboardingData } from '../lib/onboarding'
 
 interface AuthContextType {
@@ -23,7 +24,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const checkUser = async () => {
       setLoading(true)
-      const { user } = await authService.getCurrentUser()
+      const { user } = await hybridAuthService.getCurrentUser()
       setUser(user)
       setLoading(false)
     }
@@ -34,7 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Login functie
   const login = async (email: string, password: string) => {
     setLoading(true)
-    const { user, error } = await authService.login(email, password)
+    const { user, error } = await hybridAuthService.login(email, password)
     
     if (error) {
       setLoading(false)
@@ -48,7 +49,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Registratie functie
   const register = async (email: string, password: string, name: string, company?: string) => {
     setLoading(true)
-    const { user, error } = await authService.register(email, password, name, company)
+    const { user, error } = await hybridAuthService.register(email, password, name, company)
     
     if (error) {
       setLoading(false)
@@ -62,7 +63,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Uitlog functie
   const logout = async () => {
     setLoading(true)
-    const { error } = await authService.logout()
+    const { error } = await hybridAuthService.logout()
     
     if (error) {
       console.error('Logout error:', error)
@@ -77,7 +78,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!user) return
     
     setLoading(true)
-    const { user: updatedUser, error } = await authService.updateUser(user.id, userData)
+    const { user: updatedUser, error } = await hybridAuthService.updateUser(user.id, userData)
     
     if (error) {
       setLoading(false)
