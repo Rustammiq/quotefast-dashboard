@@ -5,13 +5,13 @@ import { useTheme } from "../../../contexts/ThemeContext";
 
 const navItems = [
   { icon: Home, label: "Dashboard", href: "/dashboard" },
-  { icon: Folder, label: "Projects", href: "/dashboard/projects" },
-  { icon: Library, label: "Library", href: "/dashboard/library" },
-  { icon: Bot, label: "AI Models", href: "/dashboard/models" },
   { icon: User, label: "Contactpersonen", href: "/dashboard/contactpersoon" },
   { icon: FileText, label: "Offertes", href: "/dashboard/offertes" },
+  { icon: Folder, label: "Projects", href: "/dashboard/projects" },
   { icon: Receipt, label: "Facturatie", href: "/dashboard/facturatie" },
   { icon: Mail, label: "Email", href: "/dashboard/email" },
+  { icon: Library, label: "Library", href: "/dashboard/library" },
+  { icon: Bot, label: "AI Models", href: "/dashboard/models" },
   { icon: MessageCircle, label: "WhatsApp", href: "/dashboard/whatsapp" },
   { icon: MapPin, label: "Omgeving", href: "/dashboard/omgeving" },
   { icon: Users, label: "Team", href: "/dashboard/team" },

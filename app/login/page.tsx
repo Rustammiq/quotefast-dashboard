@@ -6,6 +6,7 @@ import { useAuth } from '../../contexts/AuthContext'
 import { useRouter } from 'next/navigation'
 import ErrorMessage from '../../components/ui/ErrorMessage'
 import LoadingButton from '../../components/ui/LoadingButton'
+import ResponsiveContainer from '../../components/ui/ResponsiveContainer'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -49,8 +50,9 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-dark-bg flex items-center justify-center px-6">
-      <div className="w-full max-w-md glass-card bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/10 p-10 text-center shadow-2xl">
+    <div className="min-h-screen bg-dark-bg flex items-center justify-center">
+      <ResponsiveContainer maxWidth="md" padding="sm">
+        <div className="w-full glass-card bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/10 p-6 sm:p-10 text-center shadow-2xl">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-brand-text mb-2">Welkom terug 👋</h1>
           <p className="text-brand-muted">Log in om verder te gaan</p>
@@ -116,6 +118,7 @@ export default function LoginPage() {
           </Link>
         </div>
       </div>
+      </ResponsiveContainer>
     </div>
   )
 }
