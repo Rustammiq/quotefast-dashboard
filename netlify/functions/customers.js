@@ -1,14 +1,5 @@
 // Netlify Function for customers API
-const { createClient } = require('@supabase/supabase-js');
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-if (!supabaseUrl || !supabaseServiceKey) {
-  console.error('Missing Supabase environment variables');
-}
-
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+const { db } = require('../../lib/neon-client');
 
 exports.handler = async (event, context) => {
   // Handle CORS
@@ -30,19 +21,7 @@ exports.handler = async (event, context) => {
   try {
     if (event.httpMethod === 'GET') {
       // Get all customers
-      const { data: customers, error } = await supabase
-        .from('customers')
-        .select('*')
-        .order('name', { ascending: true });
-
-      if (error) {
-        console.error('Error fetching customers:', error);
-        return {
-          statusCode: 500,
-          headers,
-          body: JSON.stringify({ error: 'Failed to fetch customers' }),
-        };
-      }
+      const customers = await db.getCustomers();
 
       return {
         statusCode: 200,
@@ -68,26 +47,13 @@ exports.handler = async (event, context) => {
       }
 
       // Create customer
-      const { data: customer, error } = await supabase
-        .from('customers')
-        .insert({
-          name,
-          email,
-          phone,
-          address,
-          company
-        })
-        .select()
-        .single();
-
-      if (error) {
-        console.error('Error creating customer:', error);
-        return {
-          statusCode: 500,
-          headers,
-          body: JSON.stringify({ error: 'Failed to create customer' }),
-        };
-      }
+      const customer = await db.createCustomer({
+        name,
+        email,
+        phone,
+        address,
+        company
+      });
 
       return {
         statusCode: 201,

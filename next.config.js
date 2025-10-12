@@ -1,17 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Configure for Netlify static export
-  output: 'export',
+  // Configure for Netlify with Next.js plugin
+  // Remove output: 'export' to work with Netlify Next.js plugin
   trailingSlash: true,
-  distDir: 'out',
-  
-  // Disable server-side features for static export
-  // experimental: {
-  //   appDir: true, // Deprecated in Next.js 14
-  // },
   
   images: {
-    unoptimized: true, // Required for static export
     remotePatterns: [
       {
         protocol: 'https',

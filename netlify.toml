@@ -2,8 +2,8 @@
   # Build command for Next.js
   command = "npm run build"
   
-  # Publish directory (Next.js static export)
-  publish = "out"
+  # Let Netlify Next.js plugin handle the publish directory
+  # publish = "out"  # Removed to let plugin handle it
   
   # Node.js version and environment variables
   [build.environment]
