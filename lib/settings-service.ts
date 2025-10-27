@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/client';
 import { NotificationSettings, AppearanceSettings, AIPersonalizationSettings } from '../types/settings';
 
 const supabase = createClient();
+const isSupabaseAvailable = Boolean(supabase);
 
 export interface SettingsResponse<T> {
   data: T | null;
@@ -13,6 +14,19 @@ export const settingsService = {
   // Haal notification settings op
   getNotificationSettings: async (userId: string): Promise<SettingsResponse<NotificationSettings>> => {
     try {
+      if (!isSupabaseAvailable) {
+        return {
+          data: {
+            emailNotifications: true,
+            pushNotifications: true,
+            smsAlerts: false,
+            projectUpdates: true,
+            teamMentions: true,
+            systemMaintenance: true,
+          },
+          error: null,
+        };
+      }
       const { data, error } = await supabase
         .from('user_settings')
         .select('notification_settings')
@@ -47,6 +61,9 @@ export const settingsService = {
     settings: NotificationSettings
   ): Promise<SettingsResponse<boolean>> => {
     try {
+      if (!isSupabaseAvailable) {
+        return { data: false, error: 'Database tijdelijk niet beschikbaar' };
+      }
       const { error } = await supabase
         .from('user_settings')
         .upsert({
@@ -72,6 +89,16 @@ export const settingsService = {
   // Haal appearance settings op
   getAppearanceSettings: async (userId: string): Promise<SettingsResponse<AppearanceSettings>> => {
     try {
+      if (!isSupabaseAvailable) {
+        return {
+          data: {
+            theme: 'dark',
+            language: 'nl',
+            timezone: 'Europe/Amsterdam',
+          },
+          error: null,
+        };
+      }
       const { data, error } = await supabase
         .from('user_settings')
         .select('appearance_settings')
@@ -103,6 +130,9 @@ export const settingsService = {
     settings: AppearanceSettings
   ): Promise<SettingsResponse<boolean>> => {
     try {
+      if (!isSupabaseAvailable) {
+        return { data: false, error: 'Database tijdelijk niet beschikbaar' };
+      }
       const { error } = await supabase
         .from('user_settings')
         .upsert({
@@ -128,6 +158,16 @@ export const settingsService = {
   // Haal AI personalization settings op
   getAIPersonalizationSettings: async (userId: string): Promise<SettingsResponse<AIPersonalizationSettings>> => {
     try {
+      if (!isSupabaseAvailable) {
+        return {
+          data: {
+            aiOfferteGenerator: true,
+            smartTemplates: true,
+            predictiveAnalytics: false,
+          },
+          error: null,
+        };
+      }
       const { data, error } = await supabase
         .from('user_settings')
         .select('ai_personalization_settings')
@@ -159,6 +199,9 @@ export const settingsService = {
     settings: AIPersonalizationSettings
   ): Promise<SettingsResponse<boolean>> => {
     try {
+      if (!isSupabaseAvailable) {
+        return { data: false, error: 'Database tijdelijk niet beschikbaar' };
+      }
       const { error } = await supabase
         .from('user_settings')
         .upsert({

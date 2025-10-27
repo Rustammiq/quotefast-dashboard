@@ -3,6 +3,7 @@ import { Customer, Invoice, ApiResponse } from '../types/dashboard';
 import { logger } from './logger';
 
 const supabase = createClient();
+const isSupabaseAvailable = Boolean(supabase);
 
 // Cache voor API responses met proper typing
 const apiCache = new Map<string, { data: unknown; timestamp: number }>();
@@ -72,6 +73,10 @@ async function fetchWithCache<T>(
 export const customersApi = {
   // Haal alle klanten op
   getAll: async (skipCache = false): Promise<ApiResponse<Customer[]>> => {
+    if (!isSupabaseAvailable) {
+      logger.warn('Supabase unavailable: returning empty customers list.', 'api');
+      return { data: [], error: null, status: 200 };
+    }
     return fetchWithCache<Customer[]>(
       'customers:all',
       async () => {
@@ -88,6 +93,10 @@ export const customersApi = {
 
   // Haal een specifieke klant op
   getById: async (id: string, skipCache = false): Promise<ApiResponse<Customer>> => {
+    if (!isSupabaseAvailable) {
+      logger.warn('Supabase unavailable: cannot fetch customer.', 'api');
+      return { data: null, error: 'Database temporarily unavailable', status: 503 };
+    }
     return fetchWithCache<Customer>(
       `customers:${id}`,
       async () => {
@@ -105,6 +114,10 @@ export const customersApi = {
 
   // Maak een nieuwe klant aan
   create: async (customerData: Omit<Customer, 'id' | 'created_at' | 'updated_at'>): Promise<ApiResponse<Customer>> => {
+    if (!isSupabaseAvailable) {
+      logger.warn('Supabase unavailable: cannot create customer.', 'api');
+      return { data: null, error: 'Database temporarily unavailable', status: 503 };
+    }
     try {
       const { data, error } = await supabase
         .from('customers')
@@ -131,6 +144,10 @@ export const customersApi = {
 
   // Update een klant
   update: async (id: string, customerData: Partial<Omit<Customer, 'id' | 'created_at' | 'updated_at'>>): Promise<ApiResponse<Customer>> => {
+    if (!isSupabaseAvailable) {
+      logger.warn('Supabase unavailable: cannot update customer.', 'api');
+      return { data: null, error: 'Database temporarily unavailable', status: 503 };
+    }
     try {
       const { data, error } = await supabase
         .from('customers')
@@ -159,6 +176,10 @@ export const customersApi = {
 
   // Verwijder een klant
   delete: async (id: string): Promise<ApiResponse<null>> => {
+    if (!isSupabaseAvailable) {
+      logger.warn('Supabase unavailable: cannot delete customer.', 'api');
+      return { data: null, error: 'Database temporarily unavailable', status: 503 };
+    }
     try {
       const { error } = await supabase
         .from('customers')
@@ -188,6 +209,10 @@ export const customersApi = {
 export const invoicesApi = {
   // Haal alle facturen op
   getAll: async (skipCache = false): Promise<ApiResponse<Invoice[]>> => {
+    if (!isSupabaseAvailable) {
+      logger.warn('Supabase unavailable: returning empty invoices list.', 'api');
+      return { data: [], error: null, status: 200 };
+    }
     return fetchWithCache<Invoice[]>(
       'invoices:all',
       async () => {
@@ -211,6 +236,10 @@ export const invoicesApi = {
 
   // Haal een specifieke factuur op
   getById: async (id: string, skipCache = false): Promise<ApiResponse<Invoice>> => {
+    if (!isSupabaseAvailable) {
+      logger.warn('Supabase unavailable: cannot fetch invoice.', 'api');
+      return { data: null, error: 'Database temporarily unavailable', status: 503 };
+    }
     return fetchWithCache<Invoice>(
       `invoices:${id}`,
       async () => {
@@ -235,6 +264,10 @@ export const invoicesApi = {
 
   // Maak een nieuwe factuur aan
   create: async (invoiceData: Omit<Invoice, 'id' | 'created_at' | 'updated_at'>): Promise<ApiResponse<Invoice>> => {
+    if (!isSupabaseAvailable) {
+      logger.warn('Supabase unavailable: cannot create invoice.', 'api');
+      return { data: null, error: 'Database temporarily unavailable', status: 503 };
+    }
     try {
       const { data, error } = await supabase
         .from('invoices')
@@ -261,6 +294,10 @@ export const invoicesApi = {
 
   // Update een factuur
   update: async (id: string, invoiceData: Partial<Omit<Invoice, 'id' | 'created_at' | 'updated_at'>>): Promise<ApiResponse<Invoice>> => {
+    if (!isSupabaseAvailable) {
+      logger.warn('Supabase unavailable: cannot update invoice.', 'api');
+      return { data: null, error: 'Database temporarily unavailable', status: 503 };
+    }
     try {
       const { data, error } = await supabase
         .from('invoices')
@@ -289,6 +326,10 @@ export const invoicesApi = {
 
   // Verwijder een factuur
   delete: async (id: string): Promise<ApiResponse<null>> => {
+    if (!isSupabaseAvailable) {
+      logger.warn('Supabase unavailable: cannot delete invoice.', 'api');
+      return { data: null, error: 'Database temporarily unavailable', status: 503 };
+    }
     try {
       const { error } = await supabase
         .from('invoices')
