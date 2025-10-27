@@ -12,6 +12,8 @@ import AnimatedCard from '../../components/ui/AnimatedCard'
 import GradientText from '../../components/ui/GradientText'
 import LoadingSpinner from '../../components/ui/LoadingSpinner'
 
+const isMockMode = process.env.NEXT_PUBLIC_SUPABASE_URL === 'your_supabase_project_url'
+
 export default function RegisterPage() {
   const [form, setForm] = useState({ name: '', email: '', password: '' })
   const [isLoading, setIsLoading] = useState(false)
@@ -103,6 +105,14 @@ export default function RegisterPage() {
                 <AlertCircle className="w-5 h-5 text-red-400" />
                 <span className="text-red-400 text-sm">{error}</span>
               </div>
+            </div>
+          )}
+
+          {isMockMode && (
+            <div className="mb-6 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+              <p className="text-yellow-300 text-sm">
+                Supabase is nog niet geconfigureerd. Vul je projectgegevens in `.env.local` in om echte registratie te gebruiken.
+              </p>
             </div>
           )}
 

@@ -4,7 +4,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 import { useRouter } from 'next/navigation' // Importeren
 import { createClient } from '@/lib/supabase/client' // Directe import
 import { User } from '../types/user'
-import { authService, AuthResponse } from '@/lib/auth-service' // Correct pad
+import { authService, AuthResponse } from '@/lib/auth-service'
 
 interface AuthContextType {
   user: User | null
@@ -17,10 +17,8 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-// Supabase client hier aanmaken (kan null zijn in mock mode)
-const supabase = createClient();
-
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const supabase = createClient();
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const router = useRouter() // Router hook
@@ -32,6 +30,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (process.env.MOCK_AUTH === 'true') {
       setLoading(false)
       return
+    }
+
+    if (!supabase) {
+      console.warn('⚠️ Supabase client unavailable. Skipping auth listener.');
+      setLoading(false);
+      return;
     }
 
     const { data: authListener } = supabase.auth.onAuthStateChange(
@@ -63,35 +67,44 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Login functie
   const login = async (email: string, password: string) => {
-    const { user, error } = await authService.login(email, password);
-    if (error) throw new Error(error);
-    if (user) {
-      setUser(user);
+    const { user, error, status } = await authService.login(email, password)
+    if (error) {
+      throw new Error(error)
     }
-    router.refresh(); // Server state vernieuwen
+    if (user) {
+      setUser(user)
+      setLoading(false)
+      router.refresh()
+    }
+    if (!user && status === 503) {
+      throw new Error('Authenticatie is tijdelijk niet beschikbaar')
+    }
   }
 
   // Registratie functie
   const register = async (email: string, password: string, name: string, company?: string): Promise<AuthResponse> => {
-    const result = await authService.register(email, password, name, company);
+    const result = await authService.register(email, password, name, company)
 
-    // Als registratie een gebruiker teruggeeft, stel die in
     if (result.user) {
-      setUser(result.user);
+      setUser(result.user)
     }
 
-    // router.refresh voor server state; laat de caller beslissen bij 202 (email confirm)
-    router.refresh();
+    if (result.status === 202) {
+      setLoading(false)
+      return result
+    }
 
-    return result;
+    router.refresh()
+
+    return result
   }
 
   // Uitlog functie
   const logout = async () => {
-    const { error } = await authService.logout();
-    if (error) throw new Error(error);
-    setUser(null);
-    router.refresh(); // Server state vernieuwen
+    const { error } = await authService.logout()
+    if (error) throw new Error(error)
+    setUser(null)
+    router.refresh()
   }
 
   // Gebruiker bijwerken

@@ -6,6 +6,8 @@ import { useAuth } from '../../contexts/AuthContext'
 import { useRouter } from 'next/navigation'
 import ErrorMessage from '../../components/ui/ErrorMessage'
 
+const isMockMode = process.env.NEXT_PUBLIC_SUPABASE_URL === 'your_supabase_project_url'
+
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -60,6 +62,12 @@ export default function LoginPage() {
           onDismiss={() => setError('')} 
           className="mb-6"
         />
+
+        {isMockMode && (
+          <div className="mb-4 text-sm text-yellow-300 bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3">
+            Supabase is nog niet geconfigureerd. Vul je projectgegevens in `.env.local` in om echte login te gebruiken.
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>

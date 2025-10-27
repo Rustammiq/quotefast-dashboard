@@ -7,9 +7,14 @@ import { createClient } from '@/lib/supabase/client'
 export default function AuthCallback() {
   const router = useRouter()
   const supabase = createClient()
+  const isSupabaseAvailable = Boolean(supabase)
 
   useEffect(() => {
     const handleAuthCallback = async () => {
+      if (!isSupabaseAvailable) {
+        router.push('/login?error=auth_unavailable')
+        return
+      }
       try {
         const { data, error } = await supabase.auth.getSession()
         
@@ -33,7 +38,7 @@ export default function AuthCallback() {
     }
 
     handleAuthCallback()
-  }, [router, supabase.auth])
+  }, [router, supabase?.auth, isSupabaseAvailable])
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-dark-bg">

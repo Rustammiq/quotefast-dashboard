@@ -18,6 +18,7 @@ export default function ResetPassword() {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
+  const [isSupabaseAvailable] = useState(() => Boolean(supabase))
 
   useEffect(() => {
     // Check if we have the necessary tokens in the URL
@@ -43,6 +44,12 @@ export default function ResetPassword() {
 
     if (password.length < 6) {
       setError('Password must be at least 6 characters long')
+      setLoading(false)
+      return
+    }
+
+    if (!isSupabaseAvailable) {
+      setError('Resetten van wachtwoord is tijdelijk niet beschikbaar. Probeer het later opnieuw.')
       setLoading(false)
       return
     }
@@ -74,6 +81,11 @@ export default function ResetPassword() {
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-brand-text mb-2">Reset Password</h1>
             <p className="text-brand-muted">Enter your new password below</p>
+            {!isSupabaseAvailable && (
+              <p className="text-red-400 text-sm mt-2">
+                Resetten is momenteel niet mogelijk omdat de database niet beschikbaar is.
+              </p>
+            )}
           </div>
 
           {error && (
@@ -141,7 +153,7 @@ export default function ResetPassword() {
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || !isSupabaseAvailable}
               className="w-full btn-primary py-3 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Updating Password...' : 'Update Password'}
