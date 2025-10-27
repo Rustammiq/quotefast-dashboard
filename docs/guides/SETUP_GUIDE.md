@@ -110,22 +110,7 @@ Voeg deze toe in Vercel dashboard:
 - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
 - `ENCRYPTION_KEY`
 
-### **Option 2: Netlify**
-
-#### **1. Build Settings:**
-```toml
-[build]
-  command = "npm run build"
-  publish = ".next"
-
-[build.environment]
-  NODE_VERSION = "18"
-```
-
-#### **2. Environment Variables:**
-Add in Netlify dashboard onder Site Settings > Environment Variables
-
-### **Option 3: Railway**
+### **Option 2: Railway**
 
 #### **1. Railway Setup:**
 ```bash

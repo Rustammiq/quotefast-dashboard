@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/client'
 import { authService } from '@/lib/auth-service'
 
 // Mock Supabase client
-const mockSupabaseClientClient = {
+const mockSupabaseClient = {
   auth: {
     getSession: jest.fn(),
     onAuthStateChange: jest.fn(() => ({
@@ -17,7 +17,7 @@ const mockSupabaseClientClient = {
 }
 
 jest.mock('@/lib/supabase/client', () => ({
-  createClient: jest.fn(() => mockSupabaseClientClient)
+  createClient: jest.fn(() => mockSupabaseClient)
 }))
 
 // Mock auth service

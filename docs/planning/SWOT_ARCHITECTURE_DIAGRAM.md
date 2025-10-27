@@ -1,6 +1,36 @@
-# SWOT Analyse Architectuur Diagram
+# SWOT Analyse - Architectuur & Implementatie Documentatie
 
-## System Architecture
+## 📑 Inhoudsopgave
+
+- [SWOT Analyse - Architectuur \& Implementatie Documentatie](#swot-analyse---architectuur--implementatie-documentatie)
+  - [📑 Inhoudsopgave](#-inhoudsopgave)
+  - [Overview](#overview)
+  - [System Architectuur](#system-architectuur)
+  - [Data Model](#data-model)
+    - [Database Schema](#database-schema)
+  - [Component Flow](#component-flow)
+    - [Interaction Sequence](#interaction-sequence)
+  - [User Journey](#user-journey)
+    - [Gebruikerservaring Flow](#gebruikerservaring-flow)
+  - [Technology Stack](#technology-stack)
+    - [Tech Stack Overzicht](#tech-stack-overzicht)
+  - [Performance Optimalisatie](#performance-optimalisatie)
+    - [Strategieën voor Performance](#strategieën-voor-performance)
+  - [Security Architectuur](#security-architectuur)
+    - [Beveiligingslaag Structuur](#beveiligingslaag-structuur)
+  - [Conclusie](#conclusie)
+
+---
+
+## Overview
+
+Dit document beschrijft de complete architectuur voor de SWOT Analyse functionaliteit in het QuoteFast Dashboard. Het bevat systeemontwerp, data modellen, gebruikersflows en technische implementatie details.
+
+---
+
+## System Architectuur
+
+De architectuur bestaat uit vier lagen: Frontend, State Management, API Layer, en Data Layer.
 
 ```mermaid
 graph TB
@@ -61,50 +91,9 @@ graph TB
     class OpenAI,Firecrawl external
 ```
 
-## Component Flow
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant UI as SWOT UI
-    participant Store as State Store
-    participant API as SWOT API
-    participant AI as AI Service
-    participant DB as Database
-    
-    User->>UI: Start nieuwe SWOT analyse
-    UI->>Store: Create new analysis
-    Store->>API: POST /api/swot
-    API->>DB: Save analysis
-    DB-->>API: Return analysis ID
-    API-->>Store: Analysis data
-    Store-->>UI: Update UI
-    
-    User->>UI: Voeg SWOT item toe
-    UI->>Store: Add item
-    Store->>API: PUT /api/swot/:id
-    API->>DB: Update items
-    DB-->>API: Confirm update
-    API-->>Store: Success
-    Store-->>UI: Refresh items
-    
-    User->>UI: Vraag AI suggesties
-    UI->>Store: Request suggestions
-    Store->>AI: POST /api/swot/ai-suggestions
-    AI->>AI: Generate suggestions
-    AI-->>Store: Return suggestions
-    Store-->>UI: Display suggestions
-    
-    User->>UI: Accepteer suggestie
-    UI->>Store: Add suggested item
-    Store->>API: Update analysis
-    API->>DB: Save new item
-    DB-->>API: Confirm
-    API-->>Store: Success
-    Store-->>UI: Update display
-```
-
 ## Data Model
+
+### Database Schema
 
 ```mermaid
 erDiagram
@@ -150,7 +139,84 @@ erDiagram
     }
 ```
 
+## Component Flow
+
+### Interaction Sequence
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant UI as SWOT UI
+    participant Store as State Store
+    participant API as SWOT API
+    participant AI as AI Service
+    participant DB as Database
+    
+    User->>UI: Start nieuwe SWOT analyse
+    UI->>Store: Create new analysis
+    Store->>API: POST /api/swot
+    API->>DB: Save analysis
+    DB-->>API: Return analysis ID
+    API-->>Store: Analysis data
+    Store-->>UI: Update UI
+    
+    User->>UI: Voeg SWOT item toe
+    UI->>Store: Add item
+    Store->>API: PUT /api/swot/:id
+    API->>DB: Update items
+    DB-->>API: Confirm update
+    API-->>Store: Success
+    Store-->>UI: Refresh items
+    
+    User->>UI: Vraag AI suggesties
+    UI->>Store: Request suggestions
+    Store->>AI: POST /api/swot/ai-suggestions
+    AI->>AI: Generate suggestions
+    AI-->>Store: Return suggestions
+    Store-->>UI: Display suggestions
+    
+    User->>UI: Accepteer suggestie
+    UI->>Store: Add suggested item
+    Store->>API: Update analysis
+    API->>DB: Save new item
+    DB-->>API: Confirm
+    API-->>Store: Success
+    Store-->>UI: Update display
+```
+
+## User Journey
+
+### Gebruikerservaring Flow
+
+```mermaid
+journey
+    title SWOT Analyse User Journey
+    section Setup
+      Start Dashboard: 5: User
+      Navigate to SWOT: 4: User
+      Create New Analysis: 5: User
+    section Data Entry
+      Add Strengths: 4: User
+      Add Weaknesses: 4: User
+      Add Opportunities: 4: User
+      Add Threats: 4: User
+    section AI Enhancement
+      Request Suggestions: 5: User
+      Review AI Ideas: 4: User
+      Accept/Reject: 4: User
+    section Interaction
+      Drag & Drop: 5: User
+      Edit Items: 4: User
+      Set Priority: 3: User
+    section Export
+      Review Complete: 5: User
+      Export PDF: 4: User
+      Share Analysis: 3: User
+```
+
 ## Technology Stack
+
+### Tech Stack Overzicht
 
 ```mermaid
 graph LR
@@ -188,35 +254,9 @@ graph LR
     Supa --> Storage
 ```
 
-## User Interaction Flow
+## Performance Optimalisatie
 
-```mermaid
-journey
-    title SWOT Analyse User Journey
-    section Setup
-      Start Dashboard: 5: User
-      Navigate to SWOT: 4: User
-      Create New Analysis: 5: User
-    section Data Entry
-      Add Strengths: 4: User
-      Add Weaknesses: 4: User
-      Add Opportunities: 4: User
-      Add Threats: 4: User
-    section AI Enhancement
-      Request Suggestions: 5: User
-      Review AI Ideas: 4: User
-      Accept/Reject: 4: User
-    section Interaction
-      Drag & Drop: 5: User
-      Edit Items: 4: User
-      Set Priority: 3: User
-    section Export
-      Review Complete: 5: User
-      Export PDF: 4: User
-      Share Analysis: 3: User
-```
-
-## Performance Considerations
+### Strategieën voor Performance
 
 ```mermaid
 graph TD
@@ -253,7 +293,9 @@ graph TD
     Load --> DB
 ```
 
-## Security Architecture
+## Security Architectuur
+
+### Beveiligingslaag Structuur
 
 ```mermaid
 graph TB
@@ -294,3 +336,18 @@ graph TB
     Backup --> Rate
     Rate --> Validate
     Validate --> CORS
+```
+
+---
+
+## Conclusie
+
+Dit document beschrijft de volledige architectuur voor de SWOT Analyse functionaliteit. De implementatie volgt best practices voor:
+
+- ✅ Gescheiden lagen (separation of concerns)
+- ✅ Schalbaar en onderhoudbaar design
+- ✅ Beveiligde data toegang
+- ✅ Optimale gebruikerservaring
+- ✅ Performance geoptimaliseerde oplossingen
+
+Voor implementatie details, zie: [SWOT_IMPLEMENTATION_PLAN.md](./SWOT_IMPLEMENTATION_PLAN.md)

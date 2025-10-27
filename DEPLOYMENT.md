@@ -79,12 +79,6 @@ npm run build
 2. Set environment variables in Vercel dashboard
 3. Deploy automatically on push to main branch
 
-### Netlify
-1. Connect your GitHub repository to Netlify
-2. Set build command: `npm run build`
-3. Set publish directory: `.next`
-4. Set environment variables in Netlify dashboard
-
 ### Hugging Face Spaces
 1. Create a new Space
 2. Upload your code

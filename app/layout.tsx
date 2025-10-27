@@ -5,14 +5,26 @@ import "../styles/components.css";
 import "../styles/utilities.css";
 import { AppProviders } from "./components/AppProviders";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: {
     default: "QuoteFast - Automatiseer je Bedrijfsprocessen met AI",
-    template: "%s | QuoteFast"
+    template: "%s | QuoteFast",
   },
-  description: "Modern SaaS platform voor offertes, facturen, CRM en workflows. Automatiseer je werk en groei sneller met AI-powered tools. Bespaar tijd en verhoog je productiviteit.",
-  keywords: ["saas", "offertes", "facturen", "crm", "automatisatie", "workflows", "ai", "bedrijfssoftware", "business automation"],
+  description:
+    "Modern SaaS platform voor offertes, facturen, CRM en workflows. Automatiseer je werk en groei sneller met AI-powered tools. Bespaar tijd en verhoog je productiviteit.",
+  keywords: [
+    "saas",
+    "offertes",
+    "facturen",
+    "crm",
+    "automatisatie",
+    "workflows",
+    "ai",
+    "bedrijfssoftware",
+    "business automation",
+  ],
   authors: [{ name: "QuoteFast Team" }],
   creator: "QuoteFast",
   publisher: "QuoteFast",
@@ -26,11 +38,14 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
+  ),
   openGraph: {
     title: "QuoteFast - Modern SaaS Platform voor Bedrijfsautomatisering",
-    description: "Automatiseer je bedrijfsprocessen met AI. Van offertes tot facturen, alles in één platform.",
-    url: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
+    description:
+      "Automatiseer je bedrijfsprocessen met AI. Van offertes tot facturen, alles in één platform.",
+    url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
     siteName: "QuoteFast",
     locale: "nl_NL",
     type: "website",
@@ -47,9 +62,9 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
 };
@@ -59,8 +74,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0f172a" }
-  ]
+    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+  ],
 };
 
 export default function RootLayout({
@@ -74,10 +89,24 @@ export default function RootLayout({
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       </head>
       <body className="antialiased">
-        <AppProviders>
-          {children}
-        </AppProviders>
+        <AppProviders>{children}</AppProviders>
         <SpeedInsights />
+
+        {/* WUUNU SNIPPET - DON'T CHANGE THIS (START) */}
+        {process.env.NODE_ENV !== "production" && (
+          <>
+            <Script id="wuunu-ws" strategy="afterInteractive">
+              {`window.__WUUNU_WS__ = "http://127.0.0.1:52146/";`}
+            </Script>
+            <Script
+              id="wuunu-widget"
+              src="https://cdn.jsdelivr.net/npm/@wuunu/widget@0.1?cacheParam=816"
+              strategy="afterInteractive"
+              crossOrigin="anonymous"
+            />
+          </>
+        )}
+        {/* WUUNU SNIPPET - DON'T CHANGE THIS (END) */}
       </body>
     </html>
   );

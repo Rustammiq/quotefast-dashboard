@@ -78,7 +78,7 @@ describe('/api/customers', () => {
     })
 
     it('should handle unexpected error', async () => {
-      mockSupabaseServer.from.mockImplementation(() => {
+      mockSupabaseServerServer.from.mockImplementation(() => {
         throw new Error('Unexpected error')
       })
 
@@ -155,7 +155,7 @@ describe('/api/customers', () => {
     })
 
     it('should handle database error on create', async () => {
-      mockSupabaseServer.from().insert().select().single.mockResolvedValue({
+      mockSupabaseServerServer.from().insert().select().single.mockResolvedValue({
         data: null,
         error: { message: 'Database error' }
       })

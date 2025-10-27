@@ -17,7 +17,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-// Supabase client hier aanmaken
+// Supabase client hier aanmaken (kan null zijn in mock mode)
 const supabase = createClient();
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -28,8 +28,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     setLoading(true);
 
+    // Skip Supabase in mock mode
+    if (process.env.MOCK_AUTH === 'true') {
+      setLoading(false)
+      return
+    }
+
     const { data: authListener } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      async (event: any, session: any) => {
         let appUser: User | null = null;
         if (session?.user) {
           // Als er een sessie is, haal het volledige gebruikersprofiel op.

@@ -12,7 +12,15 @@ export const mockAuthService = {
 
   register: async (email: string, password: string, name: string, company?: string): Promise<AuthResponse> => {
     console.log("Mock: Registering user", { email, name, company });
-    
+
+    if (!email || !password || !name) {
+      return {
+        user: null,
+        error: "Email, wachtwoord en naam zijn verplicht",
+        status: 400
+      };
+    }
+
     if (mockAuthService.users.has(email)) {
       return {
         user: null,
@@ -42,9 +50,17 @@ export const mockAuthService = {
 
   login: async (email: string, password: string): Promise<AuthResponse> => {
     console.log("Mock: Logging in user", { email });
-    
+
+    if (!email || !password) {
+      return {
+        user: null,
+        error: "Email en wachtwoord zijn verplicht",
+        status: 400
+      };
+    }
+
     const user = mockAuthService.users.get(email);
-    
+
     if (!user) {
       return {
         user: null,
@@ -114,7 +130,11 @@ export const mockAuthService = {
 
   resetPassword: async (email: string): Promise<{ error: string | null }> => {
     console.log("Mock: Resetting password for", email);
-    
+
+    if (!email) {
+      return { error: "Email is verplicht" };
+    }
+
     if (!mockAuthService.users.has(email)) {
       return { error: "Emailadres niet gevonden" };
     }
@@ -125,7 +145,11 @@ export const mockAuthService = {
 
   updatePassword: async (password: string): Promise<{ error: string | null }> => {
     console.log("Mock: Updating password");
-    
+
+    if (!password || password.length < 6) {
+      return { error: "Wachtwoord moet minimaal 6 tekens bevatten" };
+    }
+
     if (!mockAuthService.currentUser) {
       return { error: "Geen gebruiker ingelogd" };
     }

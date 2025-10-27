@@ -1,18 +1,54 @@
-import * as React from "react";
-import { cn } from "./cn";
+import React from 'react';
 
-export function Card({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("rounded-2xl shadow-sm", className)} {...props} />;
+export interface CardProps {
+  children: React.ReactNode;
+  className?: string;
 }
 
-export function CardHeader({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("p-4 pb-0", className)} {...props} />;
+export interface CardHeaderProps {
+  children: React.ReactNode;
+  className?: string;
 }
 
-export function CardTitle({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) {
-  return <h3 className={cn("text-base font-medium", className)} {...props} />;
+export interface CardTitleProps {
+  children: React.ReactNode;
+  className?: string;
 }
 
-export function CardContent({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("p-4", className)} {...props} />;
+export interface CardContentProps {
+  children: React.ReactNode;
+  className?: string;
 }
+
+export interface CardDescriptionProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+const Card: React.FC<CardProps> = ({ children, className = '' }) => {
+  return (
+    <div className={`rounded-lg shadow-md p-4 bg-white ${className}`}>
+      {children}
+    </div>
+  );
+};
+
+export const CardHeader: React.FC<CardHeaderProps> = ({ children, className = '' }) => {
+  return <div className={`p-4 ${className}`}>{children}</div>;
+};
+
+export const CardTitle: React.FC<CardTitleProps> = ({ children, className = '' }) => {
+  return <h3 className={`text-lg font-semibold ${className}`}>{children}</h3>;
+};
+
+export const CardContent: React.FC<CardContentProps> = ({ children, className = '' }) => {
+  return <div className={`p-4 ${className}`}>{children}</div>;
+};
+
+export const CardDescription: React.FC<CardDescriptionProps> = ({ children, className = '' }) => {
+  return <p className={`text-sm text-gray-600 ${className}`}>{children}</p>;
+};
+
+// Named export
+export { Card };
+export default Card;

@@ -89,9 +89,9 @@ export default function RegisterPage() {
               className="mb-8"
             >
               <div className="flex items-center justify-center gap-2 mb-4">
-                <Sparkles className="w-8 h-8 text-brand-primary" />
-                <h1 className="text-3xl font-bold">
-                  <GradientText>Maak een account</GradientText>
+                <Sparkles className="w-8 h-8 text-brand-text" />
+                <h1 className="text-3xl font-bold text-brand-text">
+                  Maak een account
                 </h1>
               </div>
               <p className="text-brand-muted">Start je gratis proefperiode van 14 dagen</p>

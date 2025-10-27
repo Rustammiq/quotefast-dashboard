@@ -101,7 +101,7 @@ echo "🔧 Voor productie deployment:"
 echo "   1. Vul alle environment variabelen in"
 echo "   2. Configureer je Supabase database"
 echo "   3. Setup Stripe webhooks"
-echo "   4. Deploy naar Vercel/Netlify"
+echo "   4. Deploy naar Vercel"
 echo ""
 
 echo "✨ Veel plezier met het testen van QuoteFast!"

@@ -3,17 +3,19 @@ import { useState, useEffect, lazy, Suspense } from 'react';
 import { useTheme } from "../../../contexts/ThemeContext";
 import { useAIPersonalization } from "../../../contexts/AIPersonalizationContext";
 import { getPersonalizedTemplates } from "../../../lib/aiPersonalization";
+import { generateQuotationWithAI, chatWithGPT5 } from "../../../lib/github-models";
 import DashboardCard from "../components/DashboardCard";
 import PageHeader from "../components/PageHeader";
 import { logger } from '../../../lib/logger';
-import { mockOffers, getOffersStats } from "../../../lib/mockData/offersData";
-import { FileText, Euro, Target, Clock, Users, Zap } from 'lucide-react';
+import { mockOffers, getOffersStats, type Offer } from "../../../lib/mockData/offersData";
+import { FileText, Euro, Target, Clock, Users, Zap, X } from 'lucide-react';
 
 // Lazy load heavy components
 const DataTable = lazy(() => import("../components/DataTable"));
 const OfferStatusChart = lazy(() => import("../components/OfferStatusChart"));
 const OfferTimelineChart = lazy(() => import("../components/OfferTimelineChart"));
 const OfferDetailsModal = lazy(() => import("../components/OfferDetailsModal"));
+const AIOfferModal = lazy(() => import("../components/AIOfferModal"));
 
 export default function OffertesPage() {
   const { theme } = useTheme();
@@ -23,6 +25,10 @@ export default function OffertesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [isGeneratingOffer, setIsGeneratingOffer] = useState(false);
+  const [generatedOffer, setGeneratedOffer] = useState<string | null>(null);
+  const [aiError, setAiError] = useState<string | null>(null);
+  const [showAIOfferModal, setShowAIOfferModal] = useState(false);
 
   const stats = getOffersStats();
   
@@ -108,6 +114,79 @@ export default function OffertesPage() {
   const handleCreateOffer = () => {
     logger.info('Create new offer', 'offertes');
     // Implement create offer
+  };
+
+  const handleGenerateOfferWithAI = async (template: any) => {
+    if (!onboardingData) {
+      setAiError('Geen onboarding data beschikbaar');
+      return;
+    }
+
+    setIsGeneratingOffer(true);
+    setAiError(null);
+
+    try {
+      logger.info('Generating offer with AI', 'offertes', { template });
+
+      const offerContent = await generateQuotationWithAI(
+        onboardingData.companyName,
+        template.description,
+        onboardingData.industry
+      );
+
+      setGeneratedOffer(offerContent);
+      setShowAIOfferModal(true);
+      logger.info('AI offer generated successfully', 'offertes', { length: offerContent.length });
+
+    } catch (error) {
+      console.error('AI offer generation failed:', error);
+      setAiError('Fout bij het genereren van de AI-offerte. Controleer je GitHub Models configuratie.');
+      logger.error('AI offer generation failed', 'offertes', { error });
+    } finally {
+      setIsGeneratingOffer(false);
+    }
+  };
+
+  const handleChatWithAI = async (message: string) => {
+    setIsGeneratingOffer(true);
+    setAiError(null);
+
+    try {
+      const response = await chatWithGPT5(message, [], {
+        model: "gpt-4o",
+        temperature: 0.7,
+        maxTokens: 1500
+      });
+
+      return response;
+    } catch (error) {
+      console.error('AI chat failed:', error);
+      setAiError('Fout bij het communiceren met AI. Controleer je GitHub Models configuratie.');
+      throw error;
+    } finally {
+      setIsGeneratingOffer(false);
+    }
+  };
+
+  const handleSaveAIOffer = (content: string) => {
+    // Create a new offer with AI content
+    const newOffer: Offer = {
+      id: `AI-${Date.now()}`,
+      title: `AI Offerte - ${onboardingData?.companyName || 'Nieuw'}`,
+      client: onboardingData?.companyName || 'Nieuwe Klant',
+      clientEmail: onboardingData?.email || 'contact@example.com',
+      amount: 0, // Will be parsed from content
+      status: 'draft',
+      createdDate: new Date().toISOString().split('T')[0],
+      dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 30 days from now
+      description: content,
+      items: [],
+      version: 1,
+      createdBy: 'AI Assistant'
+    };
+
+    setOffers(prev => [newOffer, ...prev]);
+    logger.info('AI offer saved as new offer', 'offertes', { offerId: newOffer.id });
   };
 
   if (isLoading) {
@@ -210,7 +289,34 @@ export default function OffertesPage() {
             Gebaseerd op je bedrijfstype ({onboardingData.industry}) en teamgrootte ({onboardingData.teamSize})
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {personalizedTemplates.slice(0, 3).map((template, index) => (
+            {/* Test AI Button */}
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg p-4 border border-green-200 dark:border-green-800">
+              <div className="flex items-center gap-2 mb-2">
+                <Zap className="h-5 w-5 text-green-600" />
+                <h4 className="font-medium text-gray-900 dark:text-white">Test GPT-5.0</h4>
+              </div>
+              <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
+                Test de AI functionaliteit met een demo offerte
+              </p>
+              <button
+                onClick={() => handleGenerateOfferWithAI({
+                  id: 'test',
+                  name: 'Demo Offerte',
+                  description: 'Demo offerte voor software development project',
+                  industry: 'it',
+                  category: 'development',
+                  estimatedTime: '5 min',
+                  complexity: 'intermediate'
+                })}
+                disabled={isGeneratingOffer}
+                className="w-full px-3 py-2 bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white text-sm font-medium rounded-lg transition-colors"
+                title="Test GPT-5.0"
+              >
+                {isGeneratingOffer ? 'AI Test Bezig...' : 'Test AI Nu'}
+              </button>
+            </div>
+
+            {personalizedTemplates.slice(0, 2).map((template, index) => (
               <div key={index} className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
                 <h4 className="font-medium text-gray-900 dark:text-white mb-2">{template.name}</h4>
                 <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">{template.description}</p>
@@ -218,8 +324,13 @@ export default function OffertesPage() {
                   <span className="text-xs text-blue-600 dark:text-blue-400 font-medium">
                     {template.category}
                   </span>
-                  <button className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium">
-                    Gebruik Template
+                  <button
+                    onClick={() => handleGenerateOfferWithAI(template)}
+                    disabled={isGeneratingOffer}
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                    title="Generate AI Offer"
+                  >
+                    {isGeneratingOffer ? 'AI Genereert...' : 'AI Genereer'}
                   </button>
                 </div>
               </div>
@@ -257,6 +368,44 @@ export default function OffertesPage() {
         onSend={(offer) => logger.info('Send offer', 'offertes', { offer })}
         onDownload={(offer) => logger.info('Download offer', 'offertes', { offer })}
       />
+
+      {/* AI Offer Modal */}
+      <AIOfferModal
+        isOpen={showAIOfferModal}
+        onClose={() => {
+          setShowAIOfferModal(false);
+          setGeneratedOffer(null);
+        }}
+        offerContent={generatedOffer || ''}
+        onSave={handleSaveAIOffer}
+      />
+
+      {/* AI Error Display */}
+      {aiError && (
+        <div className="fixed bottom-4 right-4 bg-red-100 dark:bg-red-900/20 border border-red-300 dark:border-red-800 rounded-lg p-4 shadow-lg max-w-sm z-50">
+          <div className="flex items-start gap-3">
+            <div className="flex-shrink-0">
+              <X className="h-5 w-5 text-red-600 dark:text-red-400" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-medium text-red-800 dark:text-red-200">
+                AI Fout
+              </p>
+              <p className="text-sm text-red-700 dark:text-red-300 mt-1">
+                {aiError}
+              </p>
+            </div>
+            <button
+              onClick={() => setAiError(null)}
+              className="flex-shrink-0 text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-200"
+              type="button"
+              aria-label="Sluit AI foutmelding"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

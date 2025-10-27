@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useTheme } from '../contexts/ThemeContext'
-import { Sun, Moon, Play, ArrowRight, CheckCircle, Shield, Users, Zap, Code, Rocket, Heart, Search, Bell, Settings, ArrowUp, ArrowDown, Folder, DollarSign, TrendingUp, Clock, FileText, Sparkles, Star } from 'lucide-react'
+import { Sun, Moon, Play, ArrowRight, CheckCircle, Shield, Users, Zap, Code, Rocket, Heart, Search, Bell, Settings, ArrowUp, ArrowDown, Folder, DollarSign, TrendingUp, Clock, FileText, Sparkles, Star, BarChart3, Wand2, Globe2, Quote, Puzzle, MessageCircle } from 'lucide-react'
 import PublicFooter from './components/PublicFooter'
 import PricingSection from './components/PricingSection'
 import AnimatedCard from '../components/ui/AnimatedCard'
@@ -28,7 +28,14 @@ export default function Home() {
         className="container-app py-6 flex items-center justify-between relative z-10"
       >
         <Link href="/" className="font-bold text-xl text-brand-text flex items-center gap-2">
-          <Sparkles className="w-6 h-6 text-brand-primary" />
+          <div className="relative">
+            <Sparkles className="w-6 h-6 text-brand-primary" />
+            <motion.span
+              className="absolute -top-2 -left-2 w-8 h-8 rounded-full bg-brand-primary/20 blur-xl"
+              animate={{ opacity: [0.4, 0.8, 0.4], scale: [0.9, 1.1, 0.9] }}
+              transition={{ duration: 3, repeat: Infinity }}
+            />
+          </div>
           QuoteFast
         </Link>
         <div className="flex items-center gap-6">
@@ -81,20 +88,39 @@ export default function Home() {
 
       {/* Hero Section - Enhanced */}
       <section className="container-app py-24 relative z-10">
+        {/* Background accents */}
+        <motion.div
+          aria-hidden
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1 }}
+          className="absolute inset-x-0 -top-10 mx-auto h-[420px] max-w-5xl rounded-full bg-gradient-to-r from-brand-primary/20 via-white/5 to-brand-secondary/20 blur-3xl"
+        />
+        <motion.div
+          aria-hidden
+          animate={{ y: [0, 12, 0] }}
+          transition={{ duration: 8, repeat: Infinity }}
+          className="absolute -top-16 right-12 hidden lg:block h-40 w-40 rounded-full bg-gradient-to-br from-brand-primary/30 via-brand-secondary/30 to-transparent blur-2xl"
+        />
+
         {/* Badge */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-brand-primary/20 to-brand-secondary/20 text-brand-primary px-4 py-1.5 rounded-full text-sm font-medium mb-8 border border-brand-primary/30 backdrop-blur-sm"
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-brand-primary/20 to-brand-secondary/20 text-brand-primary px-5 py-2 rounded-full text-sm font-medium mb-8 border border-brand-primary/30 backdrop-blur-sm shadow-lg shadow-brand-primary/10"
         >
           <motion.div
-            animate={{ rotate: [0, 10, -10, 0] }}
+            animate={{ rotate: [0, 8, -8, 0] }}
             transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
           >
             <Zap className="w-4 h-4" />
           </motion.div>
           <span>AI-Powered Quote Generation</span>
+          <div className="flex items-center gap-1 text-xs text-brand-secondary/80">
+            <Star className="w-3 h-3" />
+            <span>Vertrouwd door 500+ bedrijven</span>
+          </div>
         </motion.div>
 
         {/* Main Heading */}
@@ -104,27 +130,62 @@ export default function Home() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="max-w-4xl"
         >
-          <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-8 text-brand-text">
+          <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6 text-brand-text">
             <GradientText className="text-5xl md:text-6xl font-bold">
-              QuoteFast Dashboard.
+              Maak offertes die binnenkomen.
             </GradientText>
-            <br />
-            <span className="text-brand-muted">Automatiseer je offertes met AI en groei je bedrijf sneller.</span>
           </h1>
+          <p className="text-xl md:text-2xl text-brand-muted max-w-3xl">
+            QuoteFast combineert AI, CRM en facturatie in één strak dashboard. Automatiseer je offerteflow, volg leads op en zet deals sneller om in omzet.
+          </p>
+        </motion.div>
+
+        {/* Hero Highlights */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl"
+        >
+          {[{
+            icon: BarChart3,
+            title: 'Realtime rapportages',
+            description: 'Direct inzicht in pipeline, conversies en omzetgroei.'
+          }, {
+            icon: Wand2,
+            title: 'Slimme AI-templates',
+            description: 'Offertes op maat met jouw branding in seconden.'
+          }, {
+            icon: Globe2,
+            title: 'Teamwork zonder grenzen',
+            description: 'Werk samen met collega’s en freelancers in één workspace.'
+          }].map((item, index) => (
+            <motion.div
+              key={item.title}
+              whileHover={{ y: -6 }}
+              className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-md shadow-xl shadow-brand-primary/5"
+            >
+              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-primary/10 text-brand-primary">
+                <item.icon className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-semibold text-brand-text mb-2">{item.title}</h3>
+              <p className="text-sm text-brand-muted leading-relaxed">{item.description}</p>
+            </motion.div>
+          ))}
         </motion.div>
 
         {/* CTA Buttons */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
           className="flex flex-col sm:flex-row gap-4 mt-12"
         >
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Link href="/register" className="btn-primary text-lg px-8 py-4 flex items-center justify-center gap-2 group">
+            <Link href="/register" className="btn-primary text-lg px-8 py-4 flex items-center justify-center gap-2 group shadow-lg shadow-brand-primary/20">
               <Sparkles className="w-5 h-5" />
               Start Gratis Proberen
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -134,11 +195,28 @@ export default function Home() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Link href="/features" className="btn-ghost text-lg px-8 py-4 flex items-center justify-center gap-2">
+            <Link href="/features" className="btn-ghost text-lg px-8 py-4 flex items-center justify-center gap-2 border border-white/10 backdrop-blur">
               <Play className="w-5 h-5" />
               Bekijk Demo
             </Link>
           </motion.div>
+        </motion.div>
+
+        {/* Social proof */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="mt-16"
+        >
+          <p className="text-brand-muted text-sm uppercase tracking-widest mb-6">Gebruikt door bouw, consultancy en marketingteams</p>
+          <div className="flex flex-wrap items-center gap-6 text-brand-text/50 text-sm md:text-base">
+            {['ConstructIQ', 'GreenSpark Agency', 'Nova Installaties', 'BrightConsult', 'StudioFlow'].map((brand) => (
+              <span key={brand} className="rounded-full border border-white/10 px-4 py-2 backdrop-blur-sm hover:text-brand-text/80 transition">
+                {brand}
+              </span>
+            ))}
+          </div>
         </motion.div>
 
         {/* Dashboard Preview - Makerkit Style */}
@@ -221,7 +299,7 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="w-full bg-gray-700/50 rounded-full h-2 mb-2">
-                      <div className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full" style={{width: '75%'}}></div>
+                      <div className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full w-3/4"></div>
                     </div>
                     <div className="flex justify-between text-xs text-gray-400">
                       <span>75%</span>
@@ -243,7 +321,7 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="w-full bg-gray-700/50 rounded-full h-2 mb-2">
-                      <div className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full" style={{width: '60%'}}></div>
+                      <div className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full w-3/5"></div>
                     </div>
                     <div className="flex justify-between text-xs text-gray-400">
                       <span>60%</span>
@@ -265,7 +343,7 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="w-full bg-gray-700/50 rounded-full h-2 mb-2">
-                      <div className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full" style={{width: '40%'}}></div>
+                      <div className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full w-2/5"></div>
                     </div>
                     <div className="flex justify-between text-xs text-gray-400">
                       <span>40%</span>
@@ -287,7 +365,7 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="w-full bg-gray-700/50 rounded-full h-2 mb-2">
-                      <div className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full" style={{width: '82%'}}></div>
+                      <div className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full w-4/5"></div>
                     </div>
                     <div className="flex justify-between text-xs text-gray-400">
                       <span>82%</span>
@@ -312,7 +390,7 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="w-full bg-gray-700/50 rounded-full h-2 mb-2">
-                      <div className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full" style={{width: '91%'}}></div>
+                      <div className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full w-9/10"></div>
                     </div>
                     <div className="flex justify-between text-xs text-gray-400">
                       <span>91%</span>
@@ -334,7 +412,7 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="w-full bg-gray-700/50 rounded-full h-2 mb-2">
-                      <div className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full" style={{width: '28%'}}></div>
+                      <div className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full w-3/10"></div>
                     </div>
                     <div className="flex justify-between text-xs text-gray-400">
                       <span>28%</span>
@@ -356,7 +434,7 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="w-full bg-gray-700/50 rounded-full h-2 mb-2">
-                      <div className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full" style={{width: '67%'}}></div>
+                      <div className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full w-2/3"></div>
                     </div>
                     <div className="flex justify-between text-xs text-gray-400">
                       <span>67%</span>
@@ -378,7 +456,7 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="w-full bg-gray-700/50 rounded-full h-2 mb-2">
-                      <div className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full" style={{width: '76%'}}></div>
+                      <div className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full w-3/4"></div>
                     </div>
                     <div className="flex justify-between text-xs text-gray-400">
                       <span>76%</span>
@@ -410,376 +488,252 @@ export default function Home() {
         </motion.div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Feature 1 */}
-          <AnimatedCard delay={0.1} className="text-center bg-brand-card/30 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-brand-primary/30 transition-all">
-            <motion.div 
-              whileHover={{ rotate: 5, scale: 1.1 }}
-              className="w-12 h-12 bg-gradient-to-br from-brand-primary/20 to-brand-secondary/20 rounded-lg flex items-center justify-center mx-auto mb-4"
+          {[{
+            icon: Wand2,
+            title: 'AI Offertegenerator',
+            description: 'Laat AI automatisch professionele offertes genereren met slimme productherkenning en optimale prijzen.'
+          }, {
+            icon: Users,
+            title: 'CRM & Klantbeheer',
+            description: 'Hou leads, klanten en follow-ups bij in één overzichtelijke workspace zonder spreadsheets.'
+          }, {
+            icon: Shield,
+            title: 'Facturatie & Betalingen',
+            description: 'Automatische facturatie, betaalherinneringen en Stripe-integratie voor een soepel betaalproces.'
+          }, {
+            icon: Rocket,
+            title: 'Workflow Automatisering',
+            description: 'Automatiseer repetitieve taken van lead tot factuur en schaal je business zonder extra overhead.'
+          }].map((feature, index) => (
+            <AnimatedCard
+              key={feature.title}
+              delay={0.1 * (index + 1)}
+              className="bg-brand-card/30 backdrop-blur-md rounded-2xl p-8 border border-white/10 hover:border-brand-primary/40 transition-all shadow-lg shadow-brand-primary/10"
             >
-              <Zap className="w-6 h-6 text-brand-primary" />
-            </motion.div>
-            <h3 className="text-xl font-semibold text-brand-text mb-3">AI Offertegenerator</h3>
-            <p className="text-brand-muted text-sm leading-relaxed">
-              Laat AI automatisch professionele offertes genereren. Slimme productherkenning en automatische prijsberekening.
-            </p>
-          </AnimatedCard>
-
-          {/* Feature 2 */}
-          <AnimatedCard delay={0.2} className="text-center bg-brand-card/30 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-brand-primary/30 transition-all">
-            <motion.div 
-              whileHover={{ rotate: 5, scale: 1.1 }}
-              className="w-12 h-12 bg-gradient-to-br from-brand-primary/20 to-brand-secondary/20 rounded-lg flex items-center justify-center mx-auto mb-4"
-            >
-              <Users className="w-6 h-6 text-brand-primary" />
-            </motion.div>
-            <h3 className="text-xl font-semibold text-brand-text mb-3">CRM & Klantbeheer</h3>
-            <p className="text-brand-muted text-sm leading-relaxed">
-              Beheer al je klanten, leads en contacten op één plek. Track conversaties en follow-ups voor betere klantrelaties.
-            </p>
-          </AnimatedCard>
-
-          {/* Feature 3 */}
-          <AnimatedCard delay={0.3} className="text-center bg-brand-card/30 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-brand-primary/30 transition-all">
-            <motion.div 
-              whileHover={{ rotate: 5, scale: 1.1 }}
-              className="w-12 h-12 bg-gradient-to-br from-brand-primary/20 to-brand-secondary/20 rounded-lg flex items-center justify-center mx-auto mb-4"
-            >
-              <Shield className="w-6 h-6 text-brand-primary" />
-            </motion.div>
-            <h3 className="text-xl font-semibold text-brand-text mb-3">Facturatie & Betalingen</h3>
-            <p className="text-brand-muted text-sm leading-relaxed">
-              Automatische facturatie, betalingsherinneringen en Stripe integratie. Accepteer betalingen online.
-            </p>
-          </AnimatedCard>
-
-          {/* Feature 4 */}
-          <AnimatedCard delay={0.4} className="text-center bg-brand-card/30 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-brand-primary/30 transition-all">
-            <motion.div 
-              whileHover={{ rotate: 5, scale: 1.1 }}
-              className="w-12 h-12 bg-gradient-to-br from-brand-primary/20 to-brand-secondary/20 rounded-lg flex items-center justify-center mx-auto mb-4"
-            >
-              <Rocket className="w-6 h-6 text-brand-primary" />
-            </motion.div>
-            <h3 className="text-xl font-semibold text-brand-text mb-3">Workflow Automatisering</h3>
-            <p className="text-brand-muted text-sm leading-relaxed">
-              Automatiseer repetitieve taken. Van lead capture tot factuur verzending - alles draait automatisch.
-            </p>
-          </AnimatedCard>
+              <motion.div
+                whileHover={{ rotate: 3, scale: 1.05 }}
+                className="w-14 h-14 bg-gradient-to-br from-brand-primary/20 to-brand-secondary/20 rounded-xl flex items-center justify-center mb-6"
+              >
+                <feature.icon className="w-7 h-7 text-brand-primary" />
+              </motion.div>
+              <h3 className="text-xl font-semibold text-brand-text mb-3">{feature.title}</h3>
+              <p className="text-brand-muted text-sm leading-relaxed">{feature.description}</p>
+            </AnimatedCard>
+          ))}
         </div>
       </section>
 
-      {/* Video Section 1 - Dashboard Demo */}
+      {/* Workflow Showcase */}
       <section className="container-app py-24">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-brand-text mb-4">Zie QuoteFast Dashboard in Actie</h2>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl font-bold text-brand-text mb-4">Zie QuoteFast in Actie</h2>
           <p className="text-brand-muted text-lg max-w-2xl mx-auto">
-            Bekijk hoe eenvoudig het is om offertes te genereren, klanten te beheren en je bedrijf te laten groeien
+            Volg het volledige traject van lead naar betaalde klant met een glasheldere workflow en realtime inzichten.
           </p>
-        </div>
-        
-        {/* Video Placeholder */}
-        <div className="relative max-w-4xl mx-auto">
-          <div className="video-placeholder aspect-video rounded-2xl flex items-center justify-center group cursor-pointer">
-            <div className="text-center">
-              <div className="w-20 h-20 bg-brand-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <Play className="w-8 h-8 text-white ml-1" />
-              </div>
-              <p className="text-brand-text font-medium">QuoteFast Dashboard Demo</p>
-              <p className="text-brand-muted text-sm mt-2">AI Offertegenerator & CRM</p>
-            </div>
-          </div>
-        </div>
-      </section>
+        </motion.div>
 
-      {/* Video Section 2 - Authentication Flows (Side by Side) */}
-      <section className="container-app py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Text Content */}
-          <div>
-            <h2 className="text-4xl font-bold text-brand-text mb-6">Veilige Authenticatie & Gebruikersbeheer</h2>
-            <p className="text-brand-muted text-lg mb-8">
-              QuoteFast biedt complete authenticatie flows voor email, social login, en meer. 
-              Beveilig je gebruikersaccounts met enterprise-grade security.
-            </p>
-            
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-brand-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <CheckCircle className="w-4 h-4 text-brand-primary" />
-                </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="relative"
+          >
+            <div className="absolute -inset-6 rounded-3xl bg-gradient-to-br from-brand-primary/30 via-brand-secondary/20 to-transparent blur-3xl" aria-hidden></div>
+            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-8 backdrop-blur-xl shadow-2xl shadow-brand-primary/20">
+              <div className="mb-6 flex items-center justify-between">
                 <div>
-                  <h3 className="text-brand-text font-semibold mb-1">Email Authenticatie</h3>
-                  <p className="text-brand-muted text-sm">Gebruikers kunnen inloggen met email en wachtwoord met veilige validatie.</p>
+                  <span className="text-xs uppercase tracking-widest text-brand-secondary/80">Realtime demo</span>
+                  <h3 className="text-2xl font-semibold text-brand-text mt-2">QuoteFast Dashboard</h3>
+                </div>
+                <div className="flex items-center gap-2 text-brand-muted text-xs">
+                  <div className="h-2 w-2 rounded-full bg-green-400"></div>
+                  Live
                 </div>
               </div>
-              
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-brand-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <CheckCircle className="w-4 h-4 text-brand-primary" />
+              <div className="aspect-video rounded-2xl bg-gradient-to-br from-brand-primary/20 via-brand-secondary/10 to-white/5 border border-white/10 flex items-center justify-center">
+                <div className="text-center">
+                  <div className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-full bg-brand-primary text-white shadow-lg shadow-brand-primary/30">
+                    <Play className="w-8 h-8 ml-1" />
+                  </div>
+                  <p className="text-brand-text font-medium">Speel de producttour</p>
+                  <p className="text-brand-muted text-sm mt-1">4 minuten • Geen geluid nodig</p>
                 </div>
-                <div>
-                  <h3 className="text-brand-text font-semibold mb-1">Social Login</h3>
-                  <p className="text-brand-muted text-sm">Ondersteuning voor Google, Facebook, LinkedIn en meer OAuth providers.</p>
-          </div>
               </div>
-              
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-brand-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <CheckCircle className="w-4 h-4 text-brand-primary" />
-                </div>
-                <div>
-                  <h3 className="text-brand-text font-semibold mb-1">Magic Links</h3>
-                  <p className="text-brand-muted text-sm">Wachtwoordloze authenticatie met veilige email link verificatie.</p>
-                </div>
+              <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+                {[{
+                  label: 'Offertes verstuurd',
+                  value: '127',
+                  trend: '+32%',
+                  positive: true
+                }, {
+                  label: 'Gem. responstijd',
+                  value: '1.2s',
+                  trend: '-18%',
+                  positive: true
+                }, {
+                  label: 'Conversie',
+                  value: '35%',
+                  trend: '+12%',
+                  positive: true
+                }].map((item) => (
+                  <div key={item.label} className="rounded-2xl border border-white/5 bg-white/5 px-4 py-6">
+                    <span className="text-brand-muted text-xs uppercase tracking-wide">{item.label}</span>
+                    <p className="text-brand-text text-2xl font-semibold mt-1">{item.value}</p>
+                    <span className={`text-xs font-medium ${item.positive ? 'text-emerald-400' : 'text-rose-400'}`}>{item.trend} deze week</span>
+                  </div>
+                ))}
+              </div>
             </div>
+          </motion.div>
 
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-brand-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <CheckCircle className="w-4 h-4 text-brand-primary" />
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            viewport={{ once: true }}
+            className="space-y-6"
+          >
+            {[{
+              icon: Wand2,
+              title: '1. Capture & kwalificeer leads',
+              description: 'Importeer leads vanuit webforms, e-mail of CRM en verrijk automatisch met bedrijfsdata.'
+            }, {
+              icon: Puzzle,
+              title: '2. Bouw offertes met AI',
+              description: 'AI vult producten, marges en voorwaarden voor je in. Jij personaliseert en verstuurt.'
+            }, {
+              icon: Sparkles,
+              title: '3. Win deals & factureer',
+              description: 'Klant accepteert digitaal. Facturen, herinneringen en betalingen gaan automatisch.'
+            }].map((step) => (
+              <motion.div
+                key={step.title}
+                whileHover={{ x: 8 }}
+                className="flex gap-4 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-primary/10 text-brand-primary">
+                  <step.icon className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-brand-text font-semibold mb-1">Wachtwoord Reset</h3>
-                  <p className="text-brand-muted text-sm">Geautomatiseerde wachtwoord reset flow met veilige token validatie.</p>
+                  <h3 className="text-lg font-semibold text-brand-text">{step.title}</h3>
+                  <p className="text-sm text-brand-muted mt-2 leading-relaxed">{step.description}</p>
                 </div>
+              </motion.div>
+            ))}
+            <div className="flex items-center gap-4 rounded-2xl border border-brand-primary/30 bg-brand-primary/10 p-6 text-brand-text">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-primary text-white shadow-lg shadow-brand-primary/30">
+                <ArrowRight className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold">Binnen 7 dagen live</p>
+                <p className="text-xs text-brand-muted">Onboarding specialist inbegrepen in elk pakket.</p>
               </div>
             </div>
-            </div>
-
-          {/* Video Content */}
-          <div className="relative">
-            <div className="video-placeholder aspect-video rounded-2xl flex items-center justify-center group cursor-pointer">
-              <div className="text-center">
-                <div className="w-20 h-20 bg-brand-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                  <Play className="w-8 h-8 text-white ml-1" />
-                </div>
-                <p className="text-brand-text font-medium">Authenticatie Demo</p>
-                <p className="text-brand-muted text-sm mt-2">Login & Registratie Flow</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Video Section 3 - AI Offertegenerator */}
-      <section className="container-app py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Video Content */}
-          <div className="relative order-2 lg:order-1">
-            <div className="video-placeholder aspect-video rounded-2xl flex items-center justify-center group cursor-pointer">
-              <div className="text-center">
-                <div className="w-20 h-20 bg-brand-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                  <Play className="w-8 h-8 text-white ml-1" />
-                </div>
-                <p className="text-brand-text font-medium">AI Offertegenerator</p>
-                <p className="text-brand-muted text-sm mt-2">Smart Quote Generation</p>
-              </div>
-            </div>
-          </div>
-          
-          {/* Text Content */}
-          <div className="order-1 lg:order-2">
-            <h2 className="text-4xl font-bold text-brand-text mb-6">AI-Powered Offertegenerator</h2>
-            <p className="text-brand-muted text-lg mb-8">
-              Laat AI automatisch professionele offertes genereren op basis van je producten en diensten. 
-              Bespaar uren werk en verhoog je conversie met slimme suggesties.
-            </p>
-            
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-brand-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <CheckCircle className="w-4 h-4 text-brand-primary" />
-                </div>
-                <div>
-                  <h3 className="text-brand-text font-semibold mb-1">Slimme Productherkenning</h3>
-                  <p className="text-brand-muted text-sm">AI herkent automatisch producten en stelt de juiste prijzen voor.</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-brand-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <CheckCircle className="w-4 h-4 text-brand-primary" />
-                </div>
-                <div>
-                  <h3 className="text-brand-text font-semibold mb-1">Automatische Berekenen</h3>
-                  <p className="text-brand-muted text-sm">BTW, kortingen en totaalbedragen worden automatisch berekend.</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-brand-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <CheckCircle className="w-4 h-4 text-brand-primary" />
-                </div>
-                <div>
-                  <h3 className="text-brand-text font-semibold mb-1">Professionele Templates</h3>
-                  <p className="text-brand-muted text-sm">Kies uit verschillende professionele offerte templates.</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-brand-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <CheckCircle className="w-4 h-4 text-brand-primary" />
-                </div>
-                <div>
-                  <h3 className="text-brand-text font-semibold mb-1">PDF Export</h3>
-                  <p className="text-brand-muted text-sm">Exporteer offertes direct naar PDF voor verzending naar klanten.</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Video Section 4 - Multi-Tenancy & Teams */}
+      {/* Testimonials */}
       <section className="container-app py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Text Content */}
-          <div>
-            <h2 className="text-4xl font-bold text-brand-text mb-6">Teams & Samenwerking</h2>
-            <p className="text-brand-muted text-lg mb-8">
-              Laat je gebruikers teams aanmaken en resources delen met andere leden. 
-              Perfect voor bureaus, consultants en groeiende bedrijven.
-            </p>
-            
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-brand-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <CheckCircle className="w-4 h-4 text-brand-primary" />
-                </div>
-                <div>
-                  <h3 className="text-brand-text font-semibold mb-1">Organisaties/Teams</h3>
-                  <p className="text-brand-muted text-sm">Ingebouwde ondersteuning voor gebruikersgroepen die resources en permissies kunnen delen.</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-brand-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <CheckCircle className="w-4 h-4 text-brand-primary" />
-                </div>
-                <div>
-                  <h3 className="text-brand-text font-semibold mb-1">Gebruiker Uitnodigingen</h3>
-                  <p className="text-brand-muted text-sm">Gebruikers kunnen nieuwe leden uitnodigen, rollen toewijzen en toegang tot features beheren.</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-brand-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <CheckCircle className="w-4 h-4 text-brand-primary" />
-                </div>
-                <div>
-                  <h3 className="text-brand-text font-semibold mb-1">Lid Rollen</h3>
-                  <p className="text-brand-muted text-sm">Eigenaar, Admin, Lid rollen met verschillende permissieniveaus.</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-brand-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <CheckCircle className="w-4 h-4 text-brand-primary" />
-                </div>
-                <div>
-                  <h3 className="text-brand-text font-semibold mb-1">Resource Delen</h3>
-                  <p className="text-brand-muted text-sm">Deel projecten, documenten en data veilig tussen teamleden.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Video Content */}
-          <div className="relative">
-            <div className="video-placeholder aspect-video rounded-2xl flex items-center justify-center group cursor-pointer">
-              <div className="text-center">
-                <div className="w-20 h-20 bg-brand-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                  <Play className="w-8 h-8 text-white ml-1" />
-                </div>
-                <p className="text-brand-text font-medium">Team Beheer</p>
-                <p className="text-brand-muted text-sm mt-2">Multi-Tenancy Demo</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Additional Features Section */}
-      <section className="container-app py-24">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-brand-text mb-4">Complete SaaS Solution</h2>
-          <p className="text-brand-muted text-lg max-w-3xl mx-auto">
-            QuoteFast is meer dan alleen offertes. Het is een complete business management suite 
-            met alle tools die je nodig hebt om je bedrijf te laten groeien.
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl font-bold text-brand-text mb-4">Wat klanten zeggen</h2>
+          <p className="text-brand-muted text-lg max-w-2xl mx-auto">
+            Scale-ups, agencies en mkb bedrijven versnellen hun salescyclus met QuoteFast.
           </p>
-        </div>
-
+        </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Feature 1 */}
-          <div className="bg-brand-card/50 rounded-2xl p-8 border border-white/10 hover:border-brand-primary/30 transition-all group">
-            <div className="w-12 h-12 bg-brand-primary/20 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <Users className="w-6 h-6 text-brand-primary" />
-            </div>
-            <h3 className="text-xl font-semibold text-brand-text mb-3">CRM & Klantbeheer</h3>
-            <p className="text-brand-muted text-sm leading-relaxed">
-              Beheer al je klanten, leads en contacten op één plek. Track conversaties, 
-              notities en follow-ups voor betere klantrelaties.
-            </p>
-          </div>
+          {[{
+            name: 'Lotte van Dijk',
+            role: 'COO • GreenSpark Agency',
+            quote: 'Onze doorlooptijd van intake tot offerte is gehalveerd. Het team kan nu focussen op consultatie in plaats van handwerk.',
+            rating: '★★★★★'
+          }, {
+            name: 'Milan Verbeek',
+            role: 'Managing Partner • Buildright',
+            quote: 'De AI suggesties zijn verrassend goed. We verhogen structureel de gemiddelde orderwaarde met 18%.',
+            rating: '★★★★★'
+          }, {
+            name: 'Sara Peeters',
+            role: 'Founder • Nova Installaties',
+            quote: 'Eindelijk één systeem voor offertes, facturen en betalingen. Klanten tekenen binnen één klik en betalen direct online.',
+            rating: '★★★★★'
+          }].map((testimonial) => (
+            <motion.div
+              key={testimonial.name}
+              whileHover={{ y: -6 }}
+              className="h-full rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl shadow-xl shadow-brand-primary/10"
+            >
+              <div className="flex items-center gap-3 text-brand-secondary mb-4">
+                <Quote className="w-5 h-5" />
+                <span className="text-sm font-semibold">{testimonial.rating}</span>
+              </div>
+              <p className="text-brand-text text-lg leading-relaxed mb-6">“{testimonial.quote}”</p>
+              <div className="text-brand-muted text-sm">
+                <p className="font-semibold text-brand-text">{testimonial.name}</p>
+                <p>{testimonial.role}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
 
-          {/* Feature 2 */}
-          <div className="bg-brand-card/50 rounded-2xl p-8 border border-white/10 hover:border-brand-primary/30 transition-all group">
-            <div className="w-12 h-12 bg-brand-primary/20 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <Shield className="w-6 h-6 text-brand-primary" />
-            </div>
-            <h3 className="text-xl font-semibold text-brand-text mb-3">Facturatie & Betalingen</h3>
-            <p className="text-brand-muted text-sm leading-relaxed">
-              Automatische facturatie, betalingsherinneringen en integratie met Stripe. 
-              Accepteer betalingen online en houd je cashflow in de gaten.
+      {/* Integrations & Support */}
+      <section className="container-app py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl font-bold text-brand-text mb-6">Integreer met je favoriete tools</h2>
+            <p className="text-brand-muted text-lg mb-8">
+              QuoteFast koppelt naadloos met CRM-systemen, boekhoudsoftware en communicatie-apps. Automatiseer datastromen zonder custom code.
             </p>
-          </div>
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              {['HubSpot', 'Exact Online', 'Teamleader', 'Zendesk', 'Slack', 'Google Drive'].map((integration) => (
+                <span key={integration} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-brand-text text-center backdrop-blur-md">
+                  {integration}
+                </span>
+              ))}
+            </div>
+            <div className="mt-8 flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-brand-muted">
+              <MessageCircle className="w-5 h-5 text-brand-secondary" />
+              <span>Dedicated success manager en live chat support voor Premium klanten.</span>
+            </div>
+          </motion.div>
 
-          {/* Feature 3 */}
-          <div className="bg-brand-card/50 rounded-2xl p-8 border border-white/10 hover:border-brand-primary/30 transition-all group">
-            <div className="w-12 h-12 bg-brand-primary/20 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <Zap className="w-6 h-6 text-brand-primary" />
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="relative">
+              <div className="video-placeholder aspect-video rounded-2xl flex items-center justify-center group cursor-pointer">
+                <div className="text-center">
+                  <div className="w-20 h-20 bg-brand-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                    <Play className="w-8 h-8 text-white ml-1" />
+                  </div>
+                  <p className="text-brand-text font-medium">Authenticatie Demo</p>
+                  <p className="text-brand-muted text-sm mt-2">Login & Registratie Flow</p>
+                </div>
+              </div>
             </div>
-            <h3 className="text-xl font-semibold text-brand-text mb-3">Workflow Automatisering</h3>
-            <p className="text-brand-muted text-sm leading-relaxed">
-              Automatiseer repetitieve taken met slimme workflows. Van lead capture 
-              tot factuur verzending - alles draait automatisch.
-            </p>
-          </div>
-
-          {/* Feature 4 */}
-          <div className="bg-brand-card/50 rounded-2xl p-8 border border-white/10 hover:border-brand-primary/30 transition-all group">
-            <div className="w-12 h-12 bg-brand-primary/20 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <Code className="w-6 h-6 text-brand-primary" />
-            </div>
-            <h3 className="text-xl font-semibold text-brand-text mb-3">API & Integraties</h3>
-            <p className="text-brand-muted text-sm leading-relaxed">
-              Krachtige API voor integraties met je bestaande tools. Webhooks, 
-              Zapier, en custom integraties voor maximale flexibiliteit.
-            </p>
-          </div>
-
-          {/* Feature 5 */}
-          <div className="bg-brand-card/50 rounded-2xl p-8 border border-white/10 hover:border-brand-primary/30 transition-all group">
-            <div className="w-12 h-12 bg-brand-primary/20 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <Rocket className="w-6 h-6 text-brand-primary" />
-            </div>
-            <h3 className="text-xl font-semibold text-brand-text mb-3">Rapportage & Analytics</h3>
-            <p className="text-brand-muted text-sm leading-relaxed">
-              Inzichtelijke dashboards en rapporten. Track je omzet, conversies 
-              en klantgedrag voor betere business beslissingen.
-            </p>
-          </div>
-
-          {/* Feature 6 */}
-          <div className="bg-brand-card/50 rounded-2xl p-8 border border-white/10 hover:border-brand-primary/30 transition-all group">
-            <div className="w-12 h-12 bg-brand-primary/20 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <Heart className="w-6 h-6 text-brand-primary" />
-            </div>
-            <h3 className="text-xl font-semibold text-brand-text mb-3">Klantportaal</h3>
-            <p className="text-brand-muted text-sm leading-relaxed">
-              Geef je klanten toegang tot hun eigen portaal. Bekijk offertes, 
-              facturen en projectstatus in real-time.
-            </p>
-          </div>
+          </motion.div>
         </div>
       </section>
 

@@ -595,7 +595,7 @@ QuoteFast is een moderne SaaS platform voor offertes, facturen, CRM en workflows
 
 ### 10.2 Infrastructure
 - [ ] **Hosting Setup**
-  - [ ] Vercel/Netlify configuration
+  - [ ] Vercel configuration
   - [ ] Custom domain setup
   - [ ] SSL certificates
   - [ ] CDN configuration

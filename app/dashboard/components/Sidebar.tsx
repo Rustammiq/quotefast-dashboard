@@ -7,7 +7,7 @@ const navItems = [
   { icon: Home, label: "Dashboard", href: "/dashboard" },
   { icon: Folder, label: "Projects", href: "/dashboard/projects" },
   { icon: Library, label: "Library", href: "/dashboard/library" },
-  { icon: Bot, label: "AI Models", href: "/dashboard/models" },
+  { icon: Bot, label: "AI Assistant", href: "/dashboard/ai-assistant" },
   { icon: User, label: "Contactpersonen", href: "/dashboard/contactpersoon" },
   { icon: FileText, label: "Offertes", href: "/dashboard/offertes" },
   { icon: Receipt, label: "Facturatie", href: "/dashboard/facturatie" },
