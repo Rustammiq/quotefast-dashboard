@@ -1,47 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, createContext, useContext } from 'react';
 
-interface Tab {
-  id: string;
-  label: string;
-  content: React.ReactNode;
+interface TabsContextType {
+  value: string;
+  onValueChange: (value: string) => void;
 }
 
+const TabsContext = createContext<TabsContextType | undefined>(undefined);
+
 interface TabsProps {
-  tabs: Tab[];
+  value: string;
+  onValueChange: (value: string) => void;
+  children: React.ReactNode;
   className?: string;
 }
 
-export const Tabs: React.FC<TabsProps> = ({ tabs, className = '' }) => {
-  const [activeTabId, setActiveTabId] = useState(tabs[0].id);
-
+export const Tabs: React.FC<TabsProps> = ({ value, onValueChange, children, className }) => {
   return (
-    <div className={`tabs ${className}`}>
-      <div className="tab-list">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            className={`tab-button ${activeTabId === tab.id ? 'active' : ''}`}
-            onClick={() => setActiveTabId(tab.id)}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-      <div className="tab-content">
-        {tabs.find((tab) => tab.id === activeTabId)?.content}
-      </div>
-    </div>
+    <TabsContext.Provider value={{ value, onValueChange }}>
+      <div className={className}>{children}</div>
+    </TabsContext.Provider>
   );
 };
 
-export const TabsList = () => {
-  return <div className="tabs-list">List Placeholder</div>;
+interface TabsListProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export const TabsList: React.FC<TabsListProps> = ({ children, className }) => {
+  return <div className={className}>{children}</div>;
 };
 
-export const TabsTrigger = () => {
-  return <div className="tabs-trigger">Trigger Placeholder</div>;
+interface TabsTriggerProps {
+  value: string;
+  children: React.ReactNode;
+  className?: string;
+}
+
+export const TabsTrigger: React.FC<TabsTriggerProps> = ({ value, children, className }) => {
+  const context = useContext(TabsContext);
+  if (!context) return null;
+
+  const isActive = context.value === value;
+
+  return (
+    <button
+      onClick={() => context.onValueChange(value)}
+      className={`${className || ''} ${isActive ? 'active' : ''}`}
+    >
+      {children}
+    </button>
+  );
 };
 
-export const TabsContent = () => {
-  return <div className="tabs-content">Content Placeholder</div>;
+interface TabsContentProps {
+  value: string;
+  children: React.ReactNode;
+  className?: string;
+}
+
+export const TabsContent: React.FC<TabsContentProps> = ({ value, children, className }) => {
+  const context = useContext(TabsContext);
+  if (!context) return null;
+
+  if (context.value !== value) return null;
+
+  return <div className={className}>{children}</div>;
 };

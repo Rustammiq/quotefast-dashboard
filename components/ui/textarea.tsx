@@ -2,7 +2,7 @@ import React from 'react';
 
 interface TextareaProps {
   value?: string;
-  onChange?: (value: string) => void;
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   className?: string;
   rows?: number;
   placeholder?: string;
@@ -12,7 +12,7 @@ const Textarea: React.FC<TextareaProps> = ({ value, onChange, className = '', ro
   return (
     <textarea
       value={value}
-      onChange={(e) => onChange && onChange(e.target.value)}
+      onChange={onChange}
       rows={rows}
       placeholder={placeholder}
       className={`p-2 border border-gray-300 rounded ${className}`}
