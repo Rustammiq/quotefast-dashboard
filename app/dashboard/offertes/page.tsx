@@ -174,7 +174,7 @@ export default function OffertesPage() {
       id: `AI-${Date.now()}`,
       title: `AI Offerte - ${onboardingData?.companyName || 'Nieuw'}`,
       client: onboardingData?.companyName || 'Nieuwe Klant',
-      clientEmail: onboardingData?.email || 'contact@example.com',
+      clientEmail: `contact@${onboardingData?.companyName?.toLowerCase().replace(/\s+/g, '-') || 'example'}.com`,
       amount: 0, // Will be parsed from content
       status: 'draft',
       createdDate: new Date().toISOString().split('T')[0],

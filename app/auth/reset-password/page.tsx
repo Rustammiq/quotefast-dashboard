@@ -5,6 +5,8 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Eye, EyeOff, CheckCircle, AlertCircle } from 'lucide-react'
 
+export const dynamic = 'force-dynamic'
+
 export default function ResetPassword() {
   const router = useRouter()
   const searchParams = useSearchParams()
