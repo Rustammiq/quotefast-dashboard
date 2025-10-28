@@ -33,7 +33,7 @@ export function createClient() {
   }
 
   try {
-    return createBrowserClient(supabaseUrl, supabaseKey)
+    return createBrowserClient(supabaseUrl!, supabaseKey!)
   } catch (error) {
     console.error('⚠️ Failed to create Supabase client, falling back to mock mode.', error)
     return null as any

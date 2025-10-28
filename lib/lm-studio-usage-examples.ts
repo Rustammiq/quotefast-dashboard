@@ -143,8 +143,8 @@ export async function exampleListModels() {
     console.log(`\n📊 ${model.name}`);
     console.log(`   Description: ${model.description}`);
     console.log(`   Type: ${model.model_type}`);
-    console.log(`   Specialties: ${model.specialties.join(', ')}`);
-    console.log(`   Use cases: ${model.use_cases.slice(0, 2).join(', ')}...`);
+    console.log(`   Specialties: ${model.specialties?.join(', ') || 'none'}`);
+    console.log(`   Use cases: ${model.use_cases?.slice(0, 2).join(', ') || 'none'}...`);
   });
 
   return models;
