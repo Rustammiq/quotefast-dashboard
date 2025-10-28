@@ -41,6 +41,9 @@ coverage/
 # Dependency directories
 jspm_packages/
 
+# Yarn lock (project uses npm)
+yarn.lock
+
 # TypeScript cache
 *.tsbuildinfo
 
