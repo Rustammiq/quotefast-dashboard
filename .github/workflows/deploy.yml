@@ -1,0 +1,38 @@
+name: Deploy to Hugging Face
+
+on:
+  push:
+    branches: [main, feature/*]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run migrations
+      run: npx tsx scripts/run-migrations.ts
+      env:
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        
+    - name: Build project
+      run: npm run build
+      
+    - name: Deploy to Hugging Face
+      uses: huggingface/huggingface_hub@v1
+      with:
+        repo_id: ${{ secrets.HF_REPO }}
+        token: ${{ secrets.HF_TOKEN }}
+        directory: ./out
+        commit_message: "Deploy: ${{ github.sha }}"
+

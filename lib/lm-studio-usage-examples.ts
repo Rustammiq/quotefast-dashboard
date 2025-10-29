@@ -9,6 +9,9 @@ import {
   reviewCode,
   chatWithModel,
   getAllModels,
+  DEFAULT_CODE_MODEL,
+  DEFAULT_OCR_MODEL,
+  LIGHTWEIGHT_OCR_MODEL,
 } from './lm-studio-service';
 
 // ===== VOORBEELD 1: Code Generatie =====
@@ -97,8 +100,41 @@ Ik wil een API route maken voor user registration met:
     },
   ];
 
-  const response = await chatWithModel('qwen2.5-coder-14b-instruct-mlx', messages);
+  const response = await chatWithModel(DEFAULT_CODE_MODEL, messages);
   console.log('Chat Response:', response);
+  return response;
+}
+
+// ===== VOORBEELD 5b: Document OCR =====
+
+export async function exampleOcrToMarkdown() {
+  const messages = [
+    {
+      role: 'system' as const,
+      content: 'Je bent een OCR-assistent die documenten omzet naar gestructureerde markdown met semantische tags.',
+    },
+    {
+      role: 'user' as const,
+      content: `
+Zet de volgende tekst (met simpele tabellen) om naar markdown en markeer belangrijke elementen:
+
+INVOICE 2025-001
+Client: QuoteFast BV
+Total: €1.250,00
+
+Items:
+- Discovery Workshop | 1 | €500
+- Dashboard Design | 1 | €750
+
+Handtekening: __________________
+Watermerk: CONFIDENTIAL
+`,
+    },
+  ];
+
+  const response = await chatWithModel(DEFAULT_OCR_MODEL, messages);
+  console.log('Gebruik de lichte OCR variant voor snelle taken:', LIGHTWEIGHT_OCR_MODEL);
+  console.log('OCR Markdown:', response);
   return response;
 }
 
@@ -156,6 +192,7 @@ export const examples = {
   debugTypeError: exampleDebugTypeError,
   reviewCode: exampleReviewCode,
   customChat: exampleCustomChat,
+  ocrToMarkdown: exampleOcrToMarkdown,
   completeWorkflow: exampleCompleteWorkflow,
   listModels: exampleListModels,
 };

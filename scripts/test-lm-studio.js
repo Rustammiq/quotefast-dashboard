@@ -40,9 +40,10 @@ async function testConnection() {
   console.log('2️⃣ Test chat functionaliteit...');
   try {
     // Zoek de exacte modellen die we geconfigureerd hebben
-    const firstModel = models.find(m => m.id === 'qwen2.5-coder-14b-instruct-mlx') || 
-                      models.find(m => m.id === 'deepseek-coder-v2-lite-instruct-mlx') ||
-                      models.find(m => m.id.includes('qwen')) ||
+    const firstModel = models.find(m => m.id === 'deepseek-coder-v2-lite-instruct-mlx') ||
+                      models.find(m => m.id === 'mradermacher/nanonets-ocr2-3b') ||
+                      models.find(m => m.id === 'mlx-community/nanonets-ocr2-3b') ||
+                      models.find(m => m.id.includes('coder') || m.id.includes('nanonets')) ||
                       models[0];
     
     if (!firstModel) {
@@ -95,8 +96,9 @@ async function testConnection() {
   console.log('3️⃣ Test code generatie...');
   try {
     const coderModel = models.find(m => m.id === 'deepseek-coder-v2-lite-instruct-mlx') ||
-                       models.find(m => m.id === 'qwen2.5-coder-14b-instruct-mlx') ||
-                       models.find(m => m.id.includes('coder')) ||
+                       models.find(m => m.id === 'mradermacher/nanonets-ocr2-3b') ||
+                       models.find(m => m.id === 'mlx-community/nanonets-ocr2-3b') ||
+                       models.find(m => m.id.includes('coder') || m.id.includes('nanonets')) ||
                        models[0];
     
     if (!coderModel) {

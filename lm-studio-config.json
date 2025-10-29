@@ -6,42 +6,93 @@
       "endpoint": "http://localhost:1234/v1"
     },
     "models": {
-      "deepseek-coder-33b-instruct": {
-        "name": "deepseek-coder-33b-instruct",
-        "description": "Advanced coding model for complex algorithms and system design",
+      "deepseek-coder-v2-lite-instruct-mlx": {
+        "name": "deepseek-coder-v2-lite-instruct-mlx",
+        "description": "Lightweight DeepSeek coder model for efficient code generation and debugging",
         "parameters": {
-          "temperature": 0.7,
-          "max_tokens": 4096,
+          "temperature": 0.3,
+          "max_tokens": 2048,
           "top_p": 0.9,
           "frequency_penalty": 0.1,
           "presence_penalty": 0.1,
-          "stop": ["</code>", "```", "\n\n\n"]
+          "stop": ["```", "\n\n\n", "</code>"]
         },
         "specialties": [
           "code-generation",
           "debugging",
-          "architecture-design",
-          "performance-optimization",
-          "error-analysis"
+          "refactoring",
+          "code-review"
         ]
       },
-      "qwen3-4b-thinking-2507": {
-        "name": "qwen/qwen3-4b-thinking-2507",
-        "description": "Thinking model for logical reasoning and step-by-step problem solving",
+      "qwen2.5-coder-14b-instruct-mlx": {
+        "name": "qwen2.5-coder-14b-instruct-mlx",
+        "description": "Advanced Qwen coder model for complex coding tasks and architecture design",
         "parameters": {
-          "temperature": 0.8,
-          "max_tokens": 2048,
+          "temperature": 0.4,
+          "max_tokens": 4096,
           "top_p": 0.95,
           "frequency_penalty": 0.0,
           "presence_penalty": 0.0,
-          "stop": ["</thinking>", "\n\n\n"]
+          "stop": ["```", "\n\n\n", "</code>"]
         },
         "specialties": [
-          "logical-reasoning",
-          "step-by-step-thinking",
-          "problem-decomposition",
-          "creative-solutions",
-          "debugging-strategies"
+          "architecture-design",
+          "complex-algorithms",
+          "system-design",
+          "performance-optimization"
+        ]
+      },
+      "mradermacher/nanonets-ocr2-3b": {
+        "name": "mradermacher/nanonets-ocr2-3b",
+        "description": "High-accuracy OCR model for document text extraction and processing",
+        "parameters": {
+          "temperature": 0.1,
+          "max_tokens": 1024,
+          "top_p": 0.8,
+          "frequency_penalty": 0.0,
+          "presence_penalty": 0.0,
+          "stop": ["\n\n\n"]
+        },
+        "specialties": [
+          "document-ocr",
+          "text-extraction",
+          "invoice-processing",
+          "receipt-scanning"
+        ]
+      },
+      "mlx-community/nanonets-ocr2-3b": {
+        "name": "mlx-community/nanonets-ocr2-3b",
+        "description": "Optimized OCR model for fast document processing",
+        "parameters": {
+          "temperature": 0.1,
+          "max_tokens": 1024,
+          "top_p": 0.8,
+          "frequency_penalty": 0.0,
+          "presence_penalty": 0.0,
+          "stop": ["\n\n\n"]
+        },
+        "specialties": [
+          "fast-ocr",
+          "document-processing",
+          "text-extraction"
+        ]
+      },
+      "qwen/qwen3-vl-4b": {
+        "name": "qwen/qwen3-vl-4b",
+        "description": "Vision-Language model for multimodal understanding",
+        "parameters": {
+          "temperature": 0.2,
+          "max_tokens": 2048,
+          "top_p": 0.9,
+          "frequency_penalty": 0.0,
+          "presence_penalty": 0.0,
+          "stop": ["\n\n\n"]
+        },
+        "specialties": [
+          "vision-language",
+          "image-understanding",
+          "visual-question-answering",
+          "multimodal-analysis"
         ]
       }
     },
@@ -49,64 +100,21 @@
       "enabled": true,
       "workflows": {
         "coding-session": {
-          "models": ["qwen/qwen3-4b-thinking-2507", "deepseek-coder-33b-instruct"],
+          "models": ["deepseek-coder-v2-lite-instruct-mlx", "qwen2.5-coder-14b-instruct-mlx"],
           "flow": [
             {
-              "model": "qwen/qwen3-4b-thinking-2507",
+              "model": "qwen2.5-coder-14b-instruct-mlx",
               "role": "analyzer",
-              "prompt": "Let's think through this problem step by step..."
+              "prompt": "Let's analyze and design the solution..."
             },
             {
-              "model": "deepseek-coder-33b-instruct", 
+              "model": "deepseek-coder-v2-lite-instruct-mlx", 
               "role": "implementer",
-              "prompt": "Based on the analysis, let's implement the solution..."
-            }
-          ]
-        },
-        "debugging-session": {
-          "models": ["deepseek-coder-33b-instruct", "qwen/qwen3-4b-thinking-2507"],
-          "flow": [
-            {
-              "model": "deepseek-coder-33b-instruct",
-              "role": "detector",
-              "prompt": "Let's identify the issues in this code..."
-            },
-            {
-              "model": "qwen/qwen3-4b-thinking-2507",
-              "role": "analyzer", 
-              "prompt": "Let's analyze the root cause of these issues..."
-            }
-          ]
-        },
-        "ideation-session": {
-          "models": ["qwen/qwen3-4b-thinking-2507"],
-          "flow": [
-            {
-              "model": "qwen/qwen3-4b-thinking-2507",
-              "role": "creative-thinker",
-              "prompt": "Let's brainstorm creative solutions and think outside the box..."
+              "prompt": "Based on the design, let's implement the solution..."
             }
           ]
         }
       }
-    }
-  },
-  "gemini": {
-    "model": "gemini-2.5-pro",
-    "capabilities": [
-      "multimodal-analysis",
-      "comprehensive-understanding", 
-      "cross-domain-knowledge",
-      "advanced-reasoning"
-    ],
-    "integration": {
-      "role": "reviewer",
-      "use_cases": [
-        "architecture-review",
-        "security-analysis",
-        "performance-optimization",
-        "best-practices-validation"
-      ]
     }
   }
 }

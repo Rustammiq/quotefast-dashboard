@@ -21,8 +21,9 @@ async function test() {
 
   // Test 2: Test met eerste coder model
   const coderModel = models.find(m => 
-    m.id === 'qwen2.5-coder-14b-instruct-mlx' || 
-    m.id === 'deepseek-coder-v2-lite-instruct-mlx'
+    m.id === 'deepseek-coder-v2-lite-instruct-mlx' ||
+    m.id === 'mradermacher/nanonets-ocr2-3b' ||
+    m.id === 'mlx-community/nanonets-ocr2-3b'
   );
 
   if (!coderModel) {

@@ -65,6 +65,10 @@ if (!rawConfig) {
 
 const config = rawConfig as LMStudioConfig;
 
+export const DEFAULT_CODE_MODEL = 'deepseek-coder-v2-lite-instruct-mlx';
+export const DEFAULT_OCR_MODEL = 'mradermacher/nanonets-ocr2-3b';
+export const LIGHTWEIGHT_OCR_MODEL = 'mlx-community/nanonets-ocr2-3b';
+
 if (!config.server?.endpoint) {
   throw new Error('LM Studio server endpoint ontbreekt in .cursor/rules/settings.json');
 }
@@ -188,7 +192,7 @@ export async function chatWithModel(
 export async function generateCode(
   task: string,
   language: string = 'TypeScript',
-  model: string = 'qwen2.5-coder-14b-instruct-mlx'
+  model: string = DEFAULT_CODE_MODEL
 ): Promise<string> {
   const systemPrompt = config.system_prompts.coding;
   const userPrompt = `Genereer ${language} code voor het volgende:
@@ -228,7 +232,7 @@ Geef volledige, production-ready code met:
 export async function debugCode(
   errorMessage: string,
   code: string,
-  model: string = 'deepseek-coder-v2-lite-instruct-mlx'
+  model: string = DEFAULT_CODE_MODEL
 ): Promise<{
   diagnosis: string;
   fixedCode: string;
@@ -285,7 +289,7 @@ Geef:
 export async function reviewCode(
   code: string,
   focus: string = 'best practices',
-  model: string = 'deepseek-coder-v2-lite-instruct-mlx'
+  model: string = DEFAULT_CODE_MODEL
 ): Promise<string> {
   const systemPrompt = config.system_prompts['code-review'];
   

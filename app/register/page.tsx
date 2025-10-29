@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import { Mail, Lock, UserPlus, User, AlertCircle, Sparkles } from 'lucide-react'
+import { Mail, Lock, UserPlus, User, AlertCircle } from 'lucide-react'
 import Link from 'next/link'
 import { useAuth } from '../../contexts/AuthContext'
 import { useRouter } from 'next/navigation'
@@ -91,7 +91,6 @@ export default function RegisterPage() {
               className="mb-8"
             >
               <div className="flex items-center justify-center gap-2 mb-4">
-                <Sparkles className="w-8 h-8 text-brand-text" />
                 <h1 className="text-3xl font-bold text-brand-text">
                   Maak een account
                 </h1>
@@ -122,7 +121,7 @@ export default function RegisterPage() {
                 Volledige naam
               </label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-brand-muted" />
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-brand-text opacity-50" />
                 <input
                   id="name"
                   type="text"
@@ -140,7 +139,7 @@ export default function RegisterPage() {
                 E-mailadres
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-brand-muted" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-brand-text opacity-50" />
                 <input
                   id="email"
                   type="email"
@@ -158,7 +157,7 @@ export default function RegisterPage() {
                 Wachtwoord
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-brand-muted" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-brand-text opacity-50" />
                 <input
                   id="password"
                   type="password"
@@ -196,7 +195,7 @@ export default function RegisterPage() {
           <div className="mt-8 text-center">
             <p className="text-brand-muted text-sm">
               Heb je al een account?{' '}
-              <Link href="/login" className="text-brand-primary hover:text-brand-primary/80 transition-colors font-medium">
+              <Link href="/login" className="text-brand-text underline hover:opacity-80 transition-opacity font-medium">
                 Inloggen
               </Link>
             </p>
@@ -205,11 +204,11 @@ export default function RegisterPage() {
           <div className="mt-6 text-center">
             <p className="text-xs text-brand-muted">
               Door een account aan te maken, ga je akkoord met onze{' '}
-              <Link href="/terms" className="text-brand-primary hover:text-brand-primary/80 transition-colors">
+              <Link href="/terms" className="text-brand-text underline hover:opacity-80 transition-opacity">
                 Algemene Voorwaarden
               </Link>{' '}
               en{' '}
-              <Link href="/privacy" className="text-brand-primary hover:text-brand-primary/80 transition-colors">
+              <Link href="/privacy" className="text-brand-text underline hover:opacity-80 transition-opacity">
                 Privacybeleid
               </Link>
             </p>

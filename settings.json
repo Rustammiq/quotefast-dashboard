@@ -1,429 +1,297 @@
 {
-  "mlx": {
-    "server": {
-      "host": "localhost",
-      "port": 8080,
-      "endpoint": "http://localhost:8080/v1"
-    },
-    "models": {
-      "qwen2.5-coder-14b-instruct-mlx": {
-        "name": "qwen2.5-coder-14b-instruct-mlx",
-        "description": "Specialized coding model optimized for Apple Silicon with MLX",
-        "model_type": "chat",
-        "parameters": {
-          "temperature": 0.7,
-          "max_tokens": 8192,
-          "top_p": 0.9,
-          "frequency_penalty": 0.0,
-          "presence_penalty": 0.0,
-          "stop": ["</code>", "```", "\n\n\n\n"]
-        },
-        "specialties": [
-          "code-generation",
-          "code-completion",
-          "code-refactoring",
-          "algorithm-implementation",
-          "bug-fixing"
-        ],
-        "use_cases": [
-          "Generate complete functions and classes",
-          "Write test cases",
-          "Code optimization",
-          "TypeScript/JavaScript development",
-          "Python scripts"
-        ]
-      },
-      "deepseek-coder-v2-lite-instruct-mlx": {
-        "name": "deepseek-coder-v2-lite-instruct-mlx",
-        "description": "Lightweight but powerful coding model for fast code generation and debugging",
-        "model_type": "chat",
-        "parameters": {
-          "temperature": 0.6,
-          "max_tokens": 4096,
-          "top_p": 0.85,
-          "frequency_penalty": 0.1,
-          "presence_penalty": 0.1,
-          "stop": ["```", "</code>", "\n\n\n"]
-        },
-        "specialties": [
-          "debugging",
-          "error-analysis",
-          "code-review",
-          "quick-prototyping",
-          "code-explanations"
-        ],
-        "use_cases": [
-          "Debug complex errors",
-          "Explain existing code",
-          "Quick code fixes",
-          "Performance analysis",
-          "Best practices suggestions"
-        ]
-      },
-      "qwen2.5-coder-7b-instruct-mlx": {
-        "name": "qwen2.5-coder-7b-instruct-mlx",
-        "description": "Efficient 7B coding model for fast code generation and debugging on Apple Silicon",
-        "model_type": "chat",
-        "parameters": {
-          "temperature": 0.6,
-          "max_tokens": 4096,
-          "top_p": 0.85,
-          "frequency_penalty": 0.1,
-          "presence_penalty": 0.1,
-          "stop": ["</code>", "```", "\n\n\n\n"]
-        },
-        "specialties": [
-          "code-generation",
-          "debugging",
-          "code-completion",
-          "quick-prototyping",
-          "algorithm-implementation"
-        ],
-        "use_cases": [
-          "Fast code generation",
-          "Debug assistance",
-          "Code completion",
-          "Quick prototyping",
-          "Algorithm implementation",
-          "TypeScript/JavaScript/Python development"
-        ]
-      },
-      "text-embedding-nomic-embed-text-v1.5": {
-        "name": "text-embedding-nomic-embed-text-v1.5",
-        "description": "High-quality embeddings for semantic search and code understanding",
-        "model_type": "embedding",
-        "parameters": {
-          "dimensions": 768,
-          "normalize": true
-        },
-        "specialties": [
-          "semantic-search",
-          "code-similarity",
-          "document-retrieval",
-          "context-understanding"
-        ],
-        "use_cases": [
-          "Find similar code snippets",
-          "Semantic code search",
-          "Document retrieval",
-          "Context-aware suggestions"
-        ]
-      }
-    },
-    "workflows": {
-      "coding-session": {
-        "name": "Complete Coding Workflow",
-        "description": "Generate, debug, and optimize code",
-        "models": [
-          "qwen2.5-coder-14b-instruct-mlx",
-          "qwen2.5-coder-7b-instruct-mlx",
-          "deepseek-coder-v2-lite-instruct-mlx"
-        ],
-        "flow": [
-          {
-            "step": 1,
-            "model": "qwen2.5-coder-14b-instruct-mlx",
-            "role": "code-generator",
-            "prompt_template": "Generate comprehensive code for: {{task}}",
-            "deliverable": "initial_implementation"
-          },
-          {
-            "step": 2,
-            "model": "deepseek-coder-v2-lite-instruct-mlx",
-            "role": "code-reviewer",
-            "prompt_template": "Review and optimize this code: {{code}}",
-            "deliverable": "optimized_implementation"
-          }
-        ]
-      },
-      "debugging-session": {
-        "name": "Debugging Workflow",
-        "description": "Analyze and fix code errors",
-        "models": [
-          "deepseek-coder-v2-lite-instruct-mlx",
-          "qwen2.5-coder-7b-instruct-mlx",
-          "qwen2.5-coder-14b-instruct-mlx"
-        ],
-        "flow": [
-          {
-            "step": 1,
-            "model": "deepseek-coder-v2-lite-instruct-mlx",
-            "role": "error-analyzer",
-            "prompt_template": "Analyze this error: {{error}}. Code context: {{code}}",
-            "deliverable": "error_diagnosis"
-          },
-          {
-            "step": 2,
-            "model": "qwen2.5-coder-14b-instruct-mlx",
-            "role": "fix-generator",
-            "prompt_template": "Generate a fix based on: {{diagnosis}}",
-            "deliverable": "fixed_code"
-          }
-        ]
-      },
-      "ideation-session": {
-        "name": "Creative Ideation Workflow",
-        "description": "Generate ideas and explore solutions",
-        "models": [
-          "qwen2.5-coder-14b-instruct-mlx"
-        ],
-        "flow": [
-          {
-            "step": 1,
-            "model": "qwen2.5-coder-14b-instruct-mlx",
-            "role": "ideation-generator",
-            "prompt_template": "Brainstorm creative solutions for: {{problem}}",
-            "deliverable": "idea_list"
-          }
-        ]
-      },
-      "testing-session": {
-        "name": "Testing Workflow",
-        "description": "Generate tests for existing code",
-        "models": [
-          "deepseek-coder-v2-lite-instruct-mlx",
-          "qwen2.5-coder-7b-instruct-mlx",
-          "qwen2.5-coder-14b-instruct-mlx"
-        ],
-        "flow": [
-          {
-            "step": 1,
-            "model": "deepseek-coder-v2-lite-instruct-mlx",
-            "role": "test-analyzer",
-            "prompt_template": "Analyze this code for test coverage: {{code}}",
-            "deliverable": "test_plan"
-          },
-          {
-            "step": 2,
-            "model": "qwen2.5-coder-14b-instruct-mlx",
-            "role": "test-generator",
-            "prompt_template": "Generate tests based on: {{test_plan}}",
-            "deliverable": "test_suite"
-          }
-        ]
-      }
-    },
-    "integrations": {
-      "embedding": {
-        "model": "text-embedding-nomic-embed-text-v1.5",
-        "use_cases": [
-          "semantic-code-search",
-          "document-retrieval",
-          "similarity-matching",
-          "context-building"
-        ],
-        "workflow": "Use embeddings to find similar code, understand context, and provide better code suggestions"
-      }
-    },
-    "system_prompts": {
-      "coding": "Je bent een expert developer gespecialiseerd in moderne software ontwikkeling. Help met code generatie, debugging en optimalisatie.",
-      "debugging": "Je bent een expert in debugging. Analyseer fouten grondig en geef duidelijke oplossingen.",
-      "ideation": "Je bent een creatief denker. Genereer innovatieve ideeën en oplossingen voor complexe problemen.",
-      "testing": "Je bent een test expert. Creëer uitgebreide test suites die alle edge cases coveren."
-    }
-  },
   "lm-studio": {
     "server": {
+      "endpoint": "http://localhost:1234/v1",
       "host": "localhost",
-      "port": 1234,
-      "endpoint": "http://localhost:1234/v1"
+      "port": 1234
     },
     "models": {
-      "qwen2.5-coder-7b-instruct": {
-        "name": "qwen2.5-coder-7b-instruct",
-        "description": "Fast 7B coding model optimized for speed and efficiency - perfect for quick code generation and completion",
+      "deepseek-coder-v2-lite-instruct-mlx": {
+        "name": "deepseek-coder-v2-lite-instruct-mlx",
         "model_type": "chat",
+        "description": "Lightweight DeepSeek coder model for efficient code generation and debugging",
         "parameters": {
           "temperature": 0.3,
           "max_tokens": 2048,
           "top_p": 0.9,
-          "frequency_penalty": 0.0,
-          "presence_penalty": 0.0,
-          "stop": ["</code>", "```", "\n\n\n"]
-        },
-        "specialties": [
-          "rapid-prototyping",
-          "code-completion",
-          "quick-fixes",
-          "syntax-help",
-          "inline-assistance"
-        ],
-        "use_cases": [
-          "Quick code completion",
-          "Fast bug fixes",
-          "Inline code suggestions",
-          "Rapid prototyping",
-          "Syntax and documentation help",
-          "Real-time coding assistance"
-        ]
-      },
-      "deepseek-coder-v2-lite-instruct": {
-        "name": "deepseek-coder-v2-lite-instruct",
-        "description": "Lite coding specialist - excellent for debugging, code review, and optimization",
-        "model_type": "chat",
-        "parameters": {
-          "temperature": 0.6,
-          "max_tokens": 2048,
-          "top_p": 0.85,
           "frequency_penalty": 0.1,
           "presence_penalty": 0.1,
-          "stop": ["```", "</code>", "\n\n\n"]
+          "stop": ["```", "\n\n\n", "</code>"]
         },
         "specialties": [
+          "code-generation",
           "debugging",
-          "error-diagnosis",
-          "code-analysis",
-          "performance-optimization",
-          "best-practices",
-          "security-auditing"
+          "refactoring",
+          "code-review",
+          "typescript",
+          "javascript",
+          "python",
+          "react"
         ],
         "use_cases": [
-          "Debug complex errors",
-          "Code quality analysis",
-          "Performance optimization suggestions",
-          "Security vulnerability detection",
-          "Best practices recommendations",
-          "Code review and refactoring advice"
+          "Generate React components",
+          "Debug TypeScript errors",
+          "Code refactoring",
+          "API endpoint creation",
+          "Database schema design"
+        ]
+      },
+      "qwen2.5-coder-14b-instruct-mlx": {
+        "name": "qwen2.5-coder-14b-instruct-mlx",
+        "model_type": "chat",
+        "description": "Advanced Qwen coder model for complex coding tasks and architecture design",
+        "parameters": {
+          "temperature": 0.4,
+          "max_tokens": 4096,
+          "top_p": 0.95,
+          "frequency_penalty": 0.0,
+          "presence_penalty": 0.0,
+          "stop": ["```", "\n\n\n", "</code>"]
+        },
+        "specialties": [
+          "architecture-design",
+          "complex-algorithms",
+          "system-design",
+          "performance-optimization",
+          "security-analysis",
+          "scalability-planning"
+        ],
+        "use_cases": [
+          "System architecture design",
+          "Complex algorithm implementation",
+          "Performance optimization",
+          "Security code review",
+          "Scalable application design"
+        ]
+      },
+      "mradermacher/nanonets-ocr2-3b": {
+        "name": "mradermacher/nanonets-ocr2-3b",
+        "model_type": "chat",
+        "description": "High-accuracy OCR model for document text extraction and processing",
+        "parameters": {
+          "temperature": 0.1,
+          "max_tokens": 1024,
+          "top_p": 0.8,
+          "frequency_penalty": 0.0,
+          "presence_penalty": 0.0,
+          "stop": ["\n\n\n"]
+        },
+        "specialties": [
+          "document-ocr",
+          "text-extraction",
+          "invoice-processing",
+          "receipt-scanning",
+          "form-processing",
+          "handwriting-recognition"
+        ],
+        "use_cases": [
+          "Extract text from invoices",
+          "Process receipts and bills",
+          "Convert documents to structured data",
+          "OCR for forms and applications",
+          "Text extraction from images"
+        ]
+      },
+      "mlx-community/nanonets-ocr2-3b": {
+        "name": "mlx-community/nanonets-ocr2-3b",
+        "model_type": "chat",
+        "description": "Optimized OCR model for fast document processing with good accuracy",
+        "parameters": {
+          "temperature": 0.1,
+          "max_tokens": 1024,
+          "top_p": 0.8,
+          "frequency_penalty": 0.0,
+          "presence_penalty": 0.0,
+          "stop": ["\n\n\n"]
+        },
+        "specialties": [
+          "fast-ocr",
+          "document-processing",
+          "text-extraction",
+          "batch-processing",
+          "real-time-scanning"
+        ],
+        "use_cases": [
+          "Quick document scanning",
+          "Batch OCR processing",
+          "Real-time text extraction",
+          "Mobile document capture",
+          "Fast invoice processing"
         ]
       },
       "text-embedding-nomic-embed-text-v1.5": {
         "name": "text-embedding-nomic-embed-text-v1.5",
-        "description": "Semantic code understanding - finds similar patterns, understands context",
         "model_type": "embedding",
+        "description": "High-quality text embedding model for semantic search and similarity matching",
         "parameters": {
-          "dimensions": 768,
-          "normalize": true
+          "temperature": 0.0,
+          "max_tokens": 512
         },
         "specialties": [
-          "code-similarity-search",
-          "context-retrieval",
-          "semantic-understanding",
-          "pattern-matching"
+          "semantic-search",
+          "text-similarity",
+          "document-clustering",
+          "recommendation-systems",
+          "content-classification"
         ],
         "use_cases": [
-          "Find similar code patterns across codebase",
-          "Retrieve relevant context for code completion",
-          "Understand code relationships",
-          "Improve code suggestions based on similar implementations"
-        ]
-      }
-    },
-    "workflows": {
-      "intelligent-coding-session": {
-        "name": "Intelligent Coding Workflow (GPT-5 style)",
-        "description": "Multi-model collaboration for high-quality code generation like GPT-4/5",
-        "models": [
-          "qwen2.5-coder-7b-instruct",
-          "deepseek-coder-v2-lite-instruct",
-          "text-embedding-nomic-embed-text-v1.5"
-        ],
-        "flow": [
-          {
-            "step": 1,
-            "model": "text-embedding-nomic-embed-text-v1.5",
-            "role": "context-researcher",
-            "prompt_template": "Analyze codebase context: {{code}}. Find similar patterns and relevant examples.",
-            "deliverable": "contextual_insights"
-          },
-          {
-            "step": 2,
-            "model": "qwen2.5-coder-7b-instruct",
-            "role": "code-generator",
-            "prompt_template": "Generate code for: {{task}}. Context: {{contextual_insights}}. Use best practices.",
-            "deliverable": "initial_code"
-          },
-          {
-            "step": 3,
-            "model": "deepseek-coder-v2-lite-instruct",
-            "role": "code-reviewer",
-            "prompt_template": "Review this code for errors, optimization, and best practices: {{initial_code}}",
-            "deliverable": "reviewed_code"
-          }
+          "Search through code documentation",
+          "Find similar code snippets",
+          "Document similarity analysis",
+          "Content recommendation",
+          "Code search and retrieval"
         ]
       },
-      "rapid-debugging": {
-        "name": "Rapid Debugging Workflow",
-        "description": "Fast debugging with multiple perspectives",
-        "models": [
-          "deepseek-coder-v2-lite-instruct",
-          "qwen2.5-coder-7b-instruct"
+      "qwen/qwen3-vl-4b": {
+        "name": "qwen/qwen3-vl-4b",
+        "model_type": "chat",
+        "description": "Vision-Language model for multimodal understanding and visual question answering",
+        "parameters": {
+          "temperature": 0.2,
+          "max_tokens": 2048,
+          "top_p": 0.9,
+          "frequency_penalty": 0.0,
+          "presence_penalty": 0.0,
+          "stop": ["\n\n\n"]
+        },
+        "specialties": [
+          "vision-language",
+          "image-understanding",
+          "visual-question-answering",
+          "multimodal-analysis",
+          "scene-description",
+          "image-captioning"
         ],
-        "flow": [
-          {
-            "step": 1,
-            "model": "deepseek-coder-v2-lite-instruct",
-            "role": "error-analyzer",
-            "prompt_template": "Analyze this error: {{error}}. Code: {{code}}. Root cause:",
-            "deliverable": "diagnosis"
-          },
-          {
-            "step": 2,
-            "model": "qwen2.5-coder-7b-instruct",
-            "role": "fix-generator",
-            "prompt_template": "Generate fix based on diagnosis: {{diagnosis}}",
-            "deliverable": "fix"
-          }
-        ]
-      },
-      "gpt5-equivalent-coding": {
-        "name": "GPT-5 Equivalent Coding Session",
-        "description": "Comprehensive coding with full context and quality assurance",
-        "models": [
-          "qwen2.5-coder-7b-instruct",
-          "deepseek-coder-v2-lite-instruct",
-          "text-embedding-nomic-embed-text-v1.5"
-        ],
-        "flow": [
-          {
-            "step": 1,
-            "model": "text-embedding-nomic-embed-text-v1.5",
-            "role": "semantic-understanding",
-            "prompt_template": "Understand context and find relevant patterns for: {{task}}",
-            "deliverable": "semantic_context"
-          },
-          {
-            "step": 2,
-            "model": "qwen2.5-coder-7b-instruct",
-            "role": "primary-coder",
-            "prompt_template": "Write high-quality, production-ready code for: {{task}}. Context: {{semantic_context}}. Requirements: {{requirements}}",
-            "deliverable": "production_code"
-          },
-          {
-            "step": 3,
-            "model": "deepseek-coder-v2-lite-instruct",
-            "role": "quality-assurance",
-            "prompt_template": "Review for: bugs, security, performance, best practices. Code: {{production_code}}",
-            "deliverable": "certified_code"
-          }
-        ]
-      }
-    },
-    "integrations": {
-      "lm-studio-gpt5-workflow": {
-        "description": "LM Studio models configured for GPT-5-like coding capabilities",
-        "capabilities": [
-          "multi-model-collaboration",
-          "semantic-code-understanding",
-          "context-aware-generation",
-          "quality-assurance-review",
-          "rapid-prototyping",
-          "intelligent-debugging",
-          "best-practices-enforcement",
-          "security-auditing"
+        "use_cases": [
+          "Analyze UI screenshots",
+          "Understand diagrams and charts",
+          "Describe code visualizations",
+          "Visual debugging assistance",
+          "Document image analysis"
         ]
       }
     },
     "system_prompts": {
-      "coding": "You are an expert coding assistant (GPT-5 equivalent). Write clean, efficient, production-ready code with best practices. Analyze requirements thoroughly and produce high-quality implementations.",
-      "debugging": "You are a debugging specialist. Diagnose root causes, explain issues clearly, and provide clear, tested solutions.",
-      "code-review": "You are a senior code reviewer. Check for bugs, security issues, performance problems, and ensure adherence to best practices. Provide constructive feedback.",
-      "context-understanding": "You are a semantic code analyzer. Understand code relationships, find patterns, and provide contextual insights for better code generation."
+      "coding": "Je bent een expert software ontwikkelaar met uitgebreide kennis van moderne web development technieken. Je helpt bij het schrijven van productie-klaar code met de beste practices. Focus op:\n- TypeScript types en interfaces\n- Error handling en edge cases\n- Performance optimalisatie\n- Security best practices\n- Code documentatie\n- Testbaarheid\n\nGebruik altijd moderne JavaScript/TypeScript features en geef complete, werkende code terug.",
+      "debugging": "Je bent een expert debugger die complexe code problemen kan analyseren en oplossen. Je aanpak:\n1. Identificeer het root cause van de fout\n2. Analyseer de code flow en data flow\n3. Controleer edge cases en input validatie\n4. Geef duidelijke uitleg van het probleem\n5. Voorzie een werkende oplossing\n6. Leg uit waarom de fix werkt\n\nGebruik systematische debugging technieken en focus op preventie van toekomstige fouten.",
+      "code-review": "Je bent een senior code reviewer die focust op kwaliteit, onderhoudbaarheid en best practices. Evalueer code op:\n- Functionaliteit en correctheid\n- Performance en efficiency\n- Security vulnerabilities\n- Code kwaliteit en onderhoudbaarheid\n- Best practices en conventies\n- Testbaarheid en documentatie\n\nGeef constructieve feedback met specifieke suggesties voor verbetering. Prioriteer kritieke issues boven style voorkeuren.",
+      "ocr-processing": "Je bent een specialist in document processing en OCR. Je taken:\n1. Extraheer tekst nauwkeurig uit documenten\n2. Structureer data in begrijpelijke formaten\n3. Identificeer belangrijke informatie (bedragen, datums, namen)\n4. Converteer naar gestructureerde markdown\n5. Behoud layout en formatting waar relevant\n6. Markeer onzekere extracties\n\nFocus op accuracy en bruikbaarheid van de geëxtraheerde informatie.",
+      "embedding-analysis": "Je bent een expert in semantic analysis en text embeddings. Je helpt bij:\n1. Analyseren van tekst similarity\n2. Content classificatie en clustering\n3. Semantic search optimalisatie\n4. Document relatie analyse\n5. Contextuele betekenis extractie\n\nGebruik embeddings om diepere inzichten te verkrijgen in tekstuele relaties en patronen.",
+      "vision-language": "Je bent een expert in multimodal AI en vision-language understanding. Je taken:\n1. Analyseer afbeeldingen en screenshots\n2. Beschrijf visuele elementen in detail\n3. Beantwoord vragen over afbeeldingen\n4. Identificeer patronen in visuele data\n5. Converteer visuele informatie naar gestructureerde tekst\n6. Gebruik visuele context om code te begrijpen\n\nFocus op accurate visuele perceptie en relevante beschrijvingen."
+    },
+    "workflows": {
+      "code-development": {
+        "name": "Complete Code Development",
+        "description": "End-to-end workflow voor code development met planning, implementatie en review",
+        "models": ["qwen2.5-coder-14b-instruct-mlx", "deepseek-coder-v2-lite-instruct-mlx"],
+        "flow": [
+          {
+            "step": 1,
+            "model": "qwen2.5-coder-14b-instruct-mlx",
+            "role": "architect",
+            "prompt_template": "Analyseer de requirements en ontwerp de architectuur voor: {task}",
+            "deliverable": "Architectuur ontwerp en technische specificaties"
+          },
+          {
+            "step": 2,
+            "model": "deepseek-coder-v2-lite-instruct-mlx",
+            "role": "implementer",
+            "prompt_template": "Implementeer de oplossing gebaseerd op dit ontwerp: {previous_output}",
+            "deliverable": "Complete, werkende code implementatie"
+          }
+        ]
+      },
+      "document-processing": {
+        "name": "Document OCR Processing",
+        "description": "OCR workflow voor document processing met keuze tussen accuracy en snelheid",
+        "models": ["mradermacher/nanonets-ocr2-3b", "mlx-community/nanonets-ocr2-3b"],
+        "flow": [
+          {
+            "step": 1,
+            "model": "mlx-community/nanonets-ocr2-3b",
+            "role": "fast-scanner",
+            "prompt_template": "Extraheer tekst uit dit document met hoge snelheid: {document_content}",
+            "deliverable": "Snelle tekst extractie voor real-time processing"
+          },
+          {
+            "step": 2,
+            "model": "mradermacher/nanonets-ocr2-3b",
+            "role": "accuracy-verifier",
+            "prompt_template": "Verificeer en verbeter de nauwkeurigheid van deze extractie: {previous_output}",
+            "deliverable": "Hoog-nauwkeurige, gecorrigeerde tekst extractie"
+          }
+        ]
+      },
+      "debug-session": {
+        "name": "Advanced Debugging Session",
+        "description": "Geavanceerde debugging workflow met systematische probleem analyse",
+        "models": ["deepseek-coder-v2-lite-instruct-mlx", "qwen2.5-coder-14b-instruct-mlx"],
+        "flow": [
+          {
+            "step": 1,
+            "model": "deepseek-coder-v2-lite-instruct-mlx",
+            "role": "quick-debugger",
+            "prompt_template": "Identificeer het probleem in deze code: {error_message}\n{code_snippet}",
+            "deliverable": "Snelle probleem identificatie en basic fix"
+          },
+          {
+            "step": 2,
+            "model": "qwen2.5-coder-14b-instruct-mlx",
+            "role": "deep-analyzer",
+            "prompt_template": "Analyseer diepgaand dit probleem en ontwerp een robuuste oplossing: {previous_analysis}",
+            "deliverable": "Diepgaande analyse en productie-klaar oplossing"
+          }
+        ]
+      },
+      "semantic-search": {
+        "name": "Semantic Search & Analysis",
+        "description": "Workflow voor semantische tekst analyse en intelligente zoekopdrachten",
+        "models": ["text-embedding-nomic-embed-text-v1.5", "deepseek-coder-v2-lite-instruct-mlx"],
+        "flow": [
+          {
+            "step": 1,
+            "model": "text-embedding-nomic-embed-text-v1.5",
+            "role": "embedder",
+            "prompt_template": "Creëer embeddings voor deze content om semantic search mogelijk te maken: {content}",
+            "deliverable": "Vector embeddings voor content"
+          },
+          {
+            "step": 2,
+            "model": "deepseek-coder-v2-lite-instruct-mlx",
+            "role": "search-analyzer",
+            "prompt_template": "Analyseer deze embeddings en vind relevante matches voor: {query}",
+            "deliverable": "Intelligente zoekresultaten met context"
+          }
+        ]
+      },
+      "vision-analysis": {
+        "name": "Vision Language Analysis",
+        "description": "Workflow voor visuele analyse en understanding met vision-language models",
+        "models": ["qwen/qwen3-vl-4b", "deepseek-coder-v2-lite-instruct-mlx"],
+        "flow": [
+          {
+            "step": 1,
+            "model": "qwen/qwen3-vl-4b",
+            "role": "vision-analyzer",
+            "prompt_template": "Analyseer deze afbeelding en beschrijf wat je ziet: {image_content}",
+            "deliverable": "Gedetailleerde visuele beschrijving en identificatie van elementen"
+          },
+          {
+            "step": 2,
+            "model": "deepseek-coder-v2-lite-instruct-mlx",
+            "role": "code-translator",
+            "prompt_template": "Zet deze visuele beschrijving om in code: {previous_output}",
+            "deliverable": "Code implementatie gebaseerd op visuele analyse"
+          }
+        ]
+      }
     },
     "recommended_settings": {
-      "temperature": "0.3 for stable code generation",
-      "max_tokens": "2048 for focused responses",
-      "stop_sequences": "['</code>', '```', '\\n\\n\\n']",
-      "note": "These settings optimize for GPT-5-like coding quality"
+      "default_temperature": 0.3,
+      "default_max_tokens": 2048,
+      "code_quality_threshold": 0.8,
+      "ocr_accuracy_threshold": 0.95,
+      "embedding_dimensions": 768
     }
   }
 }

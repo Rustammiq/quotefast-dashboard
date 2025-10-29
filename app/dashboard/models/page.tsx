@@ -49,13 +49,13 @@ export default function ModelsPage() {
       responseTime: 2.8
     },
     {
-      id: "qwen3-4b-thinking",
-      name: "Qwen3-4B-Thinking-2507",
+      id: "qwen2.5-coder-14b-instruct-mlx",
+      name: "Qwen2.5-Coder-14B-Instruct-MLX",
       provider: "Alibaba Cloud",
       endpoint: "http://127.0.0.1:1234/v1",
       status: "active",
-      capabilities: ["Advanced Reasoning", "Step-by-step Thinking", "Problem Solving", "Code Analysis"],
-      description: "Advanced reasoning model with step-by-step thinking capabilities. Excellent for complex problem solving and detailed code analysis.",
+      capabilities: ["Advanced Reasoning", "Step-by-step Thinking", "Problem Solving", "Code Analysis", "Architecture Design"],
+      description: "Advanced Qwen coder model for complex coding tasks and architecture design. Excellent for system design and performance optimization.",
       lastUsed: "1 minute ago",
       responseTime: 2.1
     },

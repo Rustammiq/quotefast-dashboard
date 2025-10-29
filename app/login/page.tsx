@@ -75,7 +75,7 @@ export default function LoginPage() {
               E-mailadres
             </label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-brand-muted" />
+              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-brand-text opacity-50" />
               <input
                 id="email"
                 type="email"
@@ -92,7 +92,7 @@ export default function LoginPage() {
               Wachtwoord
             </label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-brand-muted" />
+              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-brand-text opacity-50" />
               <input
                 id="password"
                 type="password"
@@ -117,7 +117,7 @@ export default function LoginPage() {
 
         <div className="mt-6 text-sm text-brand-muted">
           Nog geen account?{' '}
-          <Link href="/register" className="text-brand-primary hover:text-brand-primary-light hover:underline">
+          <Link href="/register" className="text-brand-text underline hover:opacity-80 transition-opacity font-medium">
             Registreer nu
           </Link>
         </div>

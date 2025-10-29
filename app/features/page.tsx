@@ -19,7 +19,7 @@ import {
 export default function FeaturesPage() {
   const features = [
     {
-      icon: <CpuChipIcon className="w-8 h-8 text-blue-400" />,
+      icon: <CpuChipIcon className="w-8 h-8 text-brand-text" />,
       title: 'AI Offertes',
       description: 'Genereer professionele offertes in minuten met intelligente AI-suggesties op basis van klantdata en historie.',
       benefits: [
@@ -30,7 +30,7 @@ export default function FeaturesPage() {
       ]
     },
     {
-      icon: <BoltIcon className="w-8 h-8 text-purple-400" />,
+      icon: <BoltIcon className="w-8 h-8 text-brand-text" />,
       title: 'Workflow Automatisatie',
       description: 'Laat repetitieve taken automatisch verlopen met slimme workflows en triggers.',
       benefits: [
@@ -41,7 +41,7 @@ export default function FeaturesPage() {
       ]
     },
     {
-      icon: <DocumentTextIcon className="w-8 h-8 text-green-400" />,
+      icon: <DocumentTextIcon className="w-8 h-8 text-brand-text" />,
       title: 'Facturen & Betalingen',
       description: 'Maak en verstuur facturen in seconden. Volg betalingen real-time met SEPA-integratie.',
       benefits: [
@@ -52,7 +52,7 @@ export default function FeaturesPage() {
       ]
     },
     {
-      icon: <ChartBarIcon className="w-8 h-8 text-orange-400" />,
+      icon: <ChartBarIcon className="w-8 h-8 text-brand-text" />,
       title: 'Analytics & Rapportage',
       description: 'Krijg inzicht in je bedrijfsprestaties met uitgebreide analytics en rapporten.',
       benefits: [
@@ -63,7 +63,7 @@ export default function FeaturesPage() {
       ]
     },
     {
-      icon: <UserGroupIcon className="w-8 h-8 text-pink-400" />,
+      icon: <UserGroupIcon className="w-8 h-8 text-brand-text" />,
       title: 'CRM & Klantbeheer',
       description: 'Beheer je klanten en leads efficiënt met een geïntegreerd CRM systeem.',
       benefits: [
@@ -74,7 +74,7 @@ export default function FeaturesPage() {
       ]
     },
     {
-      icon: <ShieldCheckIcon className="w-8 h-8 text-indigo-400" />,
+      icon: <ShieldCheckIcon className="w-8 h-8 text-brand-text" />,
       title: 'Beveiliging & Compliance',
       description: 'Enterprise-grade beveiliging met volledige GDPR compliance en data bescherming.',
       benefits: [
@@ -146,19 +146,19 @@ export default function FeaturesPage() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="text-center">
-            <div className="text-4xl font-bold text-brand-primary mb-2">10K+</div>
+            <div className="text-4xl font-bold text-brand-text mb-2">10K+</div>
             <div className="text-brand-muted">Actieve gebruikers</div>
           </div>
           <div className="text-center">
-            <div className="text-4xl font-bold text-brand-secondary mb-2">€2M+</div>
+            <div className="text-4xl font-bold text-brand-text mb-2">€2M+</div>
             <div className="text-brand-muted">Verwerkte betalingen</div>
           </div>
           <div className="text-center">
-            <div className="text-4xl font-bold text-brand-accent mb-2">50K+</div>
+            <div className="text-4xl font-bold text-brand-text mb-2">50K+</div>
             <div className="text-brand-muted">Offertes gegenereerd</div>
           </div>
           <div className="text-center">
-            <div className="text-4xl font-bold text-orange-400 mb-2">99.9%</div>
+            <div className="text-4xl font-bold text-brand-text mb-2">99.9%</div>
             <div className="text-brand-muted">Uptime garantie</div>
           </div>
         </div>
