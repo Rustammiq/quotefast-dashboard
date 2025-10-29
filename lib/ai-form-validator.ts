@@ -1,9 +1,9 @@
 /**
- * AI-geassisteerde formulier validatie met LM Studio
- * Gebruikt deepseek-coder en qwen2.5-coder voor intelligente validatie
+ * AI-geassisteerde formulier validatie met HuggingFace
+ * Gebruikt Qwen en DeepSeek modellen voor intelligente validatie
  */
 
-import { chatWithModel, getModelConfig } from './lm-studio-service'
+import { chatWithModel, getModelConfig } from './huggingface-service'
 
 export interface ValidationResult {
   isValid: boolean
@@ -47,7 +47,7 @@ SUGGESTIONS:
       },
     ]
 
-    const response = await chatWithModel('deepseek-coder-v2-lite-instruct-mlx', messages, {
+    const response = await chatWithModel('deepseek-coder-lite', messages, {
       temperature: 0.3,
       max_tokens: 256,
     })
@@ -123,7 +123,7 @@ SUGGESTIONS:
       },
     ]
 
-    const response = await chatWithModel('qwen2.5-coder-14b-instruct-mlx', messages, {
+    const response = await chatWithModel('qwen-coder-14b', messages, {
       temperature: 0.2,
       max_tokens: 256,
     })
@@ -170,7 +170,7 @@ Geef aan of de naam geldig is en eventuele suggesties.`,
       },
     ]
 
-    const response = await chatWithModel('deepseek-coder-v2-lite-instruct-mlx', messages, {
+    const response = await chatWithModel('deepseek-coder-lite', messages, {
       temperature: 0.2,
       max_tokens: 128,
     })

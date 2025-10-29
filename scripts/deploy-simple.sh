@@ -39,7 +39,7 @@ print_success "Dependencies installed"
 
 # Step 3: Run working tests only
 print_status "Running core tests..."
-if npm test -- __tests__/lib/auth-service-simple.test.ts __tests__/components/ErrorMessage-simple.test.tsx --passWithNoTests --watchAll=false --silent; then
+if npm test -- __tests__/lib/auth-service-improved.test.ts __tests__/components/ErrorMessage.test.tsx --passWithNoTests --watchAll=false --silent; then
     print_success "Core tests passed"
 else
     echo "⚠️ Some tests failed, but continuing with deployment"

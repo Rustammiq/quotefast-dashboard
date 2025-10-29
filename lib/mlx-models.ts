@@ -56,7 +56,7 @@ export interface MLXConfig {
   system_prompts: Record<string, string>;
 }
 
-const config = settings.mlx as MLXConfig;
+const config = settings['huggingface'] as MLXConfig;
 
 /**
  * Get model configuration by name

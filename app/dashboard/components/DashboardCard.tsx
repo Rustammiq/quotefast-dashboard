@@ -38,7 +38,7 @@ export default function DashboardCard({
         const steps = 40;
         const increment = value / steps;
         let current = 0;
-        
+
         const counter = setInterval(() => {
           current += increment;
           if (current >= value) {
@@ -48,13 +48,14 @@ export default function DashboardCard({
             setDisplayValue(Math.floor(current));
           }
         }, duration / steps);
-        
+
         return () => clearInterval(counter);
       } else {
         setDisplayValue(value);
+        return; // Explicit return for TypeScript
       }
     }, delay);
-    
+
     return () => clearTimeout(timer);
   }, [value, delay]);
   

@@ -1,4 +1,4 @@
-import { chatWithModel, DEFAULT_CODE_MODEL } from '../lib/lm-studio-service';
+import { chatWithModel, DEFAULT_CODE_MODEL } from '../lib/huggingface-service';
 
 export interface ValidationResult {
   valid: boolean;

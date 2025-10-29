@@ -92,28 +92,30 @@ export const useMemoryMonitor = (componentName: string) => {
           const usedMB = (memory.usedJSHeapSize / 1048576).toFixed(2);
           const totalMB = (memory.totalJSHeapSize / 1048576).toFixed(2);
           const limitMB = (memory.jsHeapSizeLimit / 1048576).toFixed(2);
-          
+
           console.log(`[Memory] ${componentName}:`, {
             used: `${usedMB}MB`,
             total: `${totalMB}MB`,
             limit: `${limitMB}MB`,
             usage: `${((memory.usedJSHeapSize / memory.jsHeapSizeLimit) * 100).toFixed(1)}%`
           });
-          
+
           // Warn if memory usage is high
           if (memory.usedJSHeapSize / memory.jsHeapSizeLimit > 0.8) {
             console.warn(`[Memory Warning] ${componentName} using ${((memory.usedJSHeapSize / memory.jsHeapSizeLimit) * 100).toFixed(1)}% of available memory`);
           }
         }
       };
-      
+
       // Check memory on mount
       checkMemory();
-      
+
       // Check memory every 30 seconds
       const interval = setInterval(checkMemory, 30000);
-      
+
       return () => clearInterval(interval);
     }
   }, [componentName]);
+
+  return; // Explicit return for TypeScript
 };

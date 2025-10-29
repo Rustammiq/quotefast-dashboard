@@ -267,7 +267,7 @@ export const trackPerformance = (name: string, fn: () => void | Promise<void>) =
     const end = performance.now();
     const duration = end - start;
     logger.debug(`${name}: ${duration.toFixed(2)}ms`, 'performance');
-    
+
     // Send to analytics in production
     if (process.env.NODE_ENV === 'production') {
       // gtag('event', 'performance_metric', {
@@ -275,6 +275,7 @@ export const trackPerformance = (name: string, fn: () => void | Promise<void>) =
       //   metric_value: Math.round(duration)
       // });
     }
+    return result;
   }
 };
 

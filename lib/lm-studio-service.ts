@@ -3,7 +3,7 @@
  * Gebruikt de OpenAI-compatibele API van LM Studio
  */
 
-import settings from '../.cursor/rules/settings.json';
+// Settings import removed - using inline configuration
 
 export interface ModelConfig {
   temperature?: number;

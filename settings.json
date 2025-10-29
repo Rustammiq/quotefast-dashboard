@@ -1,5 +1,5 @@
 {
-  "lm-studio": {
+  "huggingface": {
     "server": {
       "endpoint": "http://localhost:1234/v1",
       "host": "localhost",
